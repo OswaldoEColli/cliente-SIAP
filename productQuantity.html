@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema POS - InnovaCraft</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+        
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .tabs {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tab {
+            padding: 8px 12px;
+            margin-right: 5px;
+            border: none;
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .new-order-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        
+        .order-number {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo img {
+            height: 30px;
+        }
+        
+        .search-bar {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+        
+        /* Main Content Layout */
+        .main-content {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+        
+        /* Left Panel - Cart */
+        .cart-panel {
+            width: 35%;
+            border-right: 1px solid #ccc;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .total-section {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid #ccc;
+        }
+        
+        .client-btn {
+            padding: 8px 15px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        /* Numeric Keypad */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .key {
+            padding: 15px;
+            text-align: center;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .key:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .key-func {
+            background-color: #f9f9f9;
+        }
+        
+        .key-plus-minus {
+            background-color: #fffde7;
+        }
+        
+        .key-dot {
+            background-color: #f3e5f5;
+        }
+        
+        .key-delete {
+            background-color: #ffebee;
+        }
+        
+        .pay-btn {
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+        
+        /* Product Grid */
+        .product-panel {
+            width: 65%;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .product-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .product-image {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .product-image img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        
+        .product-name {
+            background-color: #1a237e;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 8px 5px;
+            font-size: 12px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            padding: 20px;
+            width: 400px;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .qty-label {
+            font-weight: bold;
+        }
+        
+        .qty-input-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ccc;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .qty-input {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .save-btn {
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .cancel-btn {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+        
+        /* Color variations for different product types */
+        .product-manzanita {
+            background-color: #ff9800;
+        }
+        
+        .product-sangria {
+            background-color: #4a148c;
+        }
+        
+        .product-mirinda {
+            background-color: #ff5722;
+        }
+        
+        .product-pepsi-light {
+            background-color: #3f51b5;
+        }
+        
+        .product-7up {
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="menu-btn">☰</button>
+            <div class="tabs">
+                <button class="tab">Registrar</button>
+                <button class="tab">Órdenes</button>
+                <button class="new-order-btn">+</button>
+                <span class="order-number">001</span>
+            </div>
+            <div class="logo">
+                <img src="https://via.placeholder.com/100x30?text=InnovaCraft" alt="InnovaCraft Logo">
+            </div>
+            <input type="search" class="search-bar" placeholder="Buscar producto">
+        </div>
+        
+        <div class="main-content">
+            <div class="cart-panel">
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <span>1 Pepsi 12 oz</span>
+                        <span>$15.00</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="total-section">
+                        <span>Total</span>
+                        <span>$15.00</span>
+                    </div>
+                    
+                    <button class="client-btn">Cliente</button>
+                    
+                    <div class="keypad">
+                        <button class="key">1</button>
+                        <button class="key">2</button>
+                        <button class="key">3</button>
+                        <button class="key key-func">Cant</button>
+                        <button class="key">4</button>
+                        <button class="key">5</button>
+                        <button class="key">6</button>
+                        <button class="key key-func">Desc</button>
+                        <button class="key">7</button>
+                        <button class="key">8</button>
+                        <button class="key">9</button>
+                        <button class="key key-func"></button>
+                        <button class="key key-plus-minus">+/-</button>
+                        <button class="key">0</button>
+                        <button class="key key-dot">.</button>
+                        <button class="key key-delete">×</button>
+                    </div>
+                    
+                    <button class="pay-btn">PAGAR</button>
+                </div>
+            </div>
+            
+            <div class="product-panel">
+                <div class="product-grid">
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Pepsi" alt="Pepsi 600 ml">
+                        </div>
+                        <div class="product-name">Pepsi 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Pepsi" alt="Pepsi 1.5 L">
+                        </div>
+                        <div class="product-name">Pepsi 1.5 L</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Pepsi" alt="Pepsi 2.5 L">
+                        </div>
+                        <div class="product-name">Pepsi 2.5 L</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=PepsiLight" alt="Pepsi Light 600 ml">
+                        </div>
+                        <div class="product-name product-pepsi-light">Pepsi Light 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Manzanita" alt="Manzanita 600 ml">
+                        </div>
+                        <div class="product-name product-manzanita">Manzanita 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Manzanita" alt="Manzanita 1.5 L">
+                        </div>
+                        <div class="product-name product-manzanita">Manzanita 1.5 L</div>
+                    </div>
+                    
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Coca" alt="Coca Cola 600 ml">
+                        </div>
+                        <div class="product-name">Coca Cola 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Fanta" alt="Fanta 600 ml">
+                        </div>
+                        <div class="product-name product-mirinda">Fanta 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Mirinda" alt="Mirinda 600 ml">
+                        </div>
+                        <div class="product-name product-mirinda">Mirinda 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Mirinda" alt="Mirinda 2.5 L">
+                        </div>
+                        <div class="product-name product-mirinda">Mirinda 2.5 L</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=Sangria" alt="Sangria 600 ml">
+                        </div>
+                        <div class="product-name product-sangria">Sangria 600 ml</div>
+                    </div>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="https://via.placeholder.com/80x200?text=7up" alt="7up 600 ml">
+                        </div>
+                        <div class="product-name product-7up">7up 600 ml</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal for editing quantity -->
+        <div class="overlay" id="overlay" style="display: none;"></div>
+        <div class="modal" id="quantityModal" style="display: none;">
+            <div class="modal-title">Editar cantidad.</div>
+            <div class="quantity-controls">
+                <span class="qty-label">Cantidad:</span>
+                <div class="qty-input-group">
+                    <button class="qty-btn" id="decreaseQty">−</button>
+                    <input type="text" class="qty-input" id="quantityInput" value="5">
+                    <button class="qty-btn" id="increaseQty">+</button>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="save-btn">Guardar</button>
+                <button class="cancel-btn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables to track state
+        let cartItems = [
+            { name: 'Pepsi 12 oz', price: 15.00, quantity: 1 }
+        ];
+        let selectedItemIndex = 0;
+        
+        // DOM elements
+        const overlay = document.getElementById('overlay');
+        const quantityModal = document.getElementById('quantityModal');
+        const quantityInput = document.getElementById('quantityInput');
+        const increaseQtyBtn = document.getElementById('increaseQty');
+        const decreaseQtyBtn = document.getElementById('decreaseQty');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const totalElement = document.querySelector('.total-section span:last-child');
+        const productItems = document.querySelectorAll('.product-item');
+        
+        // Display cart items and calculate total
+        function updateCart() {
+            let total = 0;
+            let cartHTML = '';
+            
+            cartItems.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartHTML += `
+                    <div class="cart-item" data-index="${index}">
+                        <span>${item.quantity} ${item.name}</span>
+                        <span>$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = cartHTML;
+            totalElement.textContent = `$${total.toFixed(2)}`;
+            
+            // Add click event to cart items
+            document.querySelectorAll('.cart-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectedItemIndex = parseInt(this.dataset.index);
+                    openQuantityModal(selectedItemIndex);
+                });
+            });
+        }
+        
+        // Open quantity modal
+        function openQuantityModal(index) {
+            const item = cartItems[index];
+            quantityInput.value = item.quantity;
+            overlay.style.display = 'block';
+            quantityModal.style.display = 'block';
+        }
+        
+        // Close quantity modal
+        function closeQuantityModal() {
+            overlay.style.display = 'none';
+            quantityModal.style.display = 'none';
+        }
+        
+        // Event: Increase quantity
+        increaseQtyBtn.addEventListener('click', function() {
+            let qty = parseInt(quantityInput.value) || 0;
+            quantityInput.value = qty + 1;
+        });
+        
+        // Event: Decrease quantity
+        decreaseQtyBtn.addEventListener('click', function() {
+            let qty = parseInt(quantityInput.value) || 0;
+            if (qty > 1) {
+                quantityInput.value = qty - 1;
+            }
+        });
+        
+        // Event: Save button in modal
+        document.querySelector('.save-btn').addEventListener('click', function() {
+            const newQty = parseInt(quantityInput.value) || 1;
+            cartItems[selectedItemIndex].quantity = newQty;
+            updateCart();
+            closeQuantityModal();
+        });
+        
+        // Event: Cancel/Delete button in modal
+        document.querySelector('.cancel-btn').addEventListener('click', function() {
+            cartItems.splice(selectedItemIndex, 1);
+            updateCart();
+            closeQuantityModal();
+        });
+        
+        // Event: Product item click
+        productItems.forEach(product => {
+            product.addEventListener('click', function() {
+                const productName = this.querySelector('.product-name').textContent;
+                // Check if item already exists in cart
+                const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+                
+                if (existingItemIndex >= 0) {
+                    // Increase quantity if exists
+                    cartItems[existingItemIndex].quantity++;
+                } else {
+                    // Add new item
+                    cartItems.push({
+                        name: productName,
+                        price: 15.00, // Default price for simplicity
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+            });
+        });
+        
+        // Event: Keypad numbers
+        document.querySelectorAll('.key').forEach(key => {
+            key.addEventListener('click', function() {
+                const value = this.textContent;
+                if (/^\d$/.test(value)) {
+                    // Handle number keys
+                    console.log(`Pressed number: ${value}`);
+                } else if (value === 'Cant') {
+                    // Handle quantity button
+                    if (cartItems.length > 0) {
+                        openQuantityModal(0);
+                    }
+                }
+            });
+        });
+        
+        // Initialize
+        updateCart();
+    </script>
+</body>
+</html>

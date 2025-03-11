@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2d3142;
+        }
+        
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3142;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .form-group {
+            padding: 0 10px;
+            margin-bottom: 20px;
+            flex: 0 0 50%;
+            width: 50%;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #2d3142;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4568dc;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cancel {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .btn-confirm {
+            background-color: #2d3989;
+            color: white;
+        }
+        
+        .btn-confirm:hover {
+            background-color: #222c6b;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .login-link a {
+            color: #2d3989;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 576px) {
+            .form-group {
+                flex: 0 0 100%;
+                width: 100%;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+                margin: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Crea tu cuenta</h1>
+        
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre" class="form-label">Nombre (s)</label>
+                    <input type="text" id="nombre" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="apellido" class="form-label">Apellido (s)</label>
+                    <input type="text" id="apellido" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="telefono" class="form-label">Número de teléfono</label>
+                    <input type="tel" id="telefono" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirma tu contraseña</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn btn-cancel">Cancelar</button>
+                <button type="submit" class="btn btn-confirm">Confirmar</button>
+            </div>
+            
+            <div class="login-link">
+                <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Basic form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+            
+            // Form submission would go here
+            alert('Formulario enviado correctamente');
+        });
+    </script>
+</body>
+</html>
