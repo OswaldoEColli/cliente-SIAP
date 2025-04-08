@@ -1,364 +1,370 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIAP - Sistema de Inventario de Asociación Pepsi</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        
-        /* Sidebar Styles */
-        .sidebar {
-            width: 180px;
-            background-color: #1a1a2e;
-            color: white;
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-        }
-        
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 16px;
-        }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left: 3px solid #0084ff;
-            font-weight: 500;
-        }
-        
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        
-        .menu-item i {
-            margin-right: 12px;
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .logout-btn {
-            margin-top: auto;
-            margin-left: 16px;
-            margin-right: 16px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-        
-        .logout-btn i {
-            margin-right: 8px;
-        }
-        
-        /* Main Content Styles */
-        .main-content {
-            flex-grow: 1;
-            background-color: #1f213a;
-            padding: 24px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            margin-bottom: 30px;
-        }
-        
-        .title {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-        
-        .subtitle {
-            color: #b8b8b8;
-            font-size: 14px;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 900px;
-        }
-        
-        .card {
-            height: 180px;
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 4px;
-        }
-        
-        .card-subtitle {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .card-image {
-            align-self: flex-end;
-            height: 90px;
-        }
-        
-        .card-icon {
-            font-size: 60px;
-            color: white;
-            align-self: flex-end;
-        }
-        
-        .add-product {
-            background-color: #9f84ff;
-            background-image: linear-gradient(45deg, #9f84ff, #7a5fff);
-        }
-        
-        .modify-inventory {
-            background-color: #6b9fff;
-            background-image: linear-gradient(45deg, #6b9fff, #4e7fff);
-        }
-        
-        .view-inventory {
-            background-color: #ff9f7a;
-            background-image: linear-gradient(45deg, #ff9f7a, #ff7a5f);
-        }
-        
-        .welcome {
-            background-color: #3c3f5c;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .card-group {
-            display: flex;
-            align-items: center;
-        }
-        
-        .toggle-sidebar {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            margin-bottom: 16px;
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -180px;
-                top: 0;
-                height: 100%;
-                z-index: 100;
-                transition: left 0.3s ease;
-            }
-            
-            .sidebar.active {
-                left: 0;
-            }
-            
-            .toggle-sidebar {
-                display: block;
-            }
-            
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIAP - Sistema de Inventario de Asociación Pepsi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Work Sans', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background-color:#30343F;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 180px;
+      background-color: #30343F;
+      color: white;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 10;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: #e0e0e0;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .menu-item.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-left: 3px solid #0084ff;
+      font-weight: 500;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .menu-item i {
+      margin-right: 12px;
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      margin-left: 16px;
+      margin-right: 16px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .logout-btn i {
+      margin-right: 8px;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      margin-left: 200px;
+      width: 1680px;
+      height: 800px;
+      background-color: #1E2749;
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .title {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: #b8b8b8;
+      font-size: 13px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      height: 160px;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .card-image {
+      align-self: flex-end;
+      height: 80px;
+    }
+
+    .card-icon {
+      font-size: 48px;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .add-product {
+      background-color: #9f84ff;
+      background-image: linear-gradient(45deg, #9f84ff, #7a5fff);
+    }
+
+    .modify-inventory {
+      background-color: #6b9fff;
+      background-image: linear-gradient(45deg, #6b9fff, #4e7fff);
+    }
+
+    .view-inventory {
+      background-color: #ff9f7a;
+      background-image: linear-gradient(45deg, #ff9f7a, #ff7a5f);
+    }
+
+    .welcome {
+      background-color: #3c3f5c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-sidebar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -180px;
+        top: 0;
+        height: 100%;
+        z-index: 100;
+        transition: left 0.3s ease;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .toggle-sidebar {
+        display: block;
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        border-radius: 0;
+      }
+    }
+
+    .logo-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">SIAP •</div>
-            <button class="theme-toggle">
-                <i class="fas fa-sun"></i>
-            </button>
-        </div>
-        
-        <a href="#" class="menu-item active">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-dollar-sign"></i>
-            <span>Ventas</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-users"></i>
-            <span>Clientes</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Reportes</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-book"></i>
-            <span>Catálogo</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-boxes"></i>
-            <span>Inventario</span>
-        </a>
-        
-        <a href="#" class="menu-item">
-            <i class="fas fa-cog"></i>
-            <span>Ajustes</span>
-        </a>
-        
-        <button class="logout-btn">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Salir</span>
-        </button>
+  <!-- Sidebar Navigation -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">SIAP •</div>
+      <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
     </div>
-    
-    <!-- Main Content Area -->
-    <div class="main-content">
-        <button class="toggle-sidebar" id="toggle-sidebar">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="header">
-            <h1 class="title">SISTEMA DE INVENTARIO DE ASOCIACIÓN PEPSI</h1>
-            <p class="subtitle">Distribuidora Pepsi Palizada</p>
-        </div>
-        
-        <div class="dashboard">
-            <!-- Add Product Card -->
-            <div class="card add-product">
-                <div>
-                    <h2 class="card-title">Agregar producto</h2>
-                    <p class="card-subtitle">Nuevos productos</p>
-                </div>
-                <img src="https://www.pepsico.com/images/album/product-images/pepsi_12oz.png?sfvrsn=9dd4d549_2" alt="Pepsi Products" class="card-image">
-            </div>
-            
-            <!-- Modify Inventory Card -->
-            <div class="card modify-inventory">
-                <div>
-                    <h2 class="card-title">Modificar inventario</h2>
-                    <p class="card-subtitle">Cambiar el stock</p>
-                </div>
-                <img src="https://mktg.pepsico.com.co/d/pepsi/img_pepsi_cooler_cat.png?sfvrsn=e9004ffc_4" alt="Pepsi Fridge" class="card-image">
-            </div>
-            
-            <!-- View Inventory Card -->
-            <div class="card view-inventory">
-                <div>
-                    <h2 class="card-title">Ver inventario</h2>
-                    <p class="card-subtitle">Todos los productos</p>
-                </div>
-                <img src="https://images.squarespace-cdn.com/content/v1/5e4f625b3b5d572abb4eec77/1603296118304-FYG9GWSPJPKPLJTMRWD9/PPC001_Lipton_Group_04_LOGO.png" alt="Pepsi Products Group" class="card-image">
-            </div>
-            
-            <!-- Welcome Card -->
-            <div class="card welcome">
-                <div>
-                    <h2 class="card-title">Bienvenido</h2>
-                    <p class="card-subtitle">Gestión de Productos</p>
-                </div>
-                <i class="fas fa-glass-cheers card-icon"></i>
-            </div>
-        </div>
+
+    <a href="home.html" class="menu-item active">
+      <i class="fas fa-home"></i>
+      <span>Inicio</span>
+    </a>
+
+    <a href="sales.html" class="menu-item">
+      <i class="fas fa-dollar-sign"></i>
+      <span>Ventas</span>
+    </a>
+
+    <a href="customer.html" class="menu-item">
+      <i class="fas fa-users"></i>
+      <span>Clientes</span>
+    </a>
+
+    <a href="#" class="menu-item">
+      <i class="fas fa-chart-bar"></i>
+      <span>Reportes</span>
+    </a>
+
+    <a href="#" class="menu-item">
+      <i class="fas fa-book"></i>
+      <span>Catálogo</span>
+    </a>
+
+    <a href="inventory.html" class="menu-item">
+      <i class="fas fa-boxes"></i>
+      <span>Inventario</span>
+    </a>
+
+    <a href="settings.html" class="menu-item">
+      <i class="fas fa-cog"></i>
+      <span>Ajustes</span>
+    </a>
+
+    <button class="logout-btn">
+      <i class="fas fa-sign-out-alt" ></i>
+      <span>Salir</span>
+    </button>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <div class="header">
+      <h1 class="title">SISTEMA DE INVENTARIO DE ASOCIACIÓN PEPSI</h1>
+      <p class="subtitle">Distribuidora Pepsi Palizada</p>
     </div>
-    
-    <script>
-        // Toggle sidebar on mobile
-        document.getElementById('toggle-sidebar').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-        });
-        
-        // Theme toggle functionality
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        
-        themeToggle.addEventListener('click', function() {
-            body.classList.toggle('light-mode');
-            if (body.classList.contains('light-mode')) {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+
+    <div class="dashboard">
+      <div class="card add-product">
+        <div>
+          <h2 class="card-title">Agregar producto</h2>
+          <p class="card-subtitle">Nuevos productos</p>
+        </div>
+        <img src="photos/Pepsi-PNG-Picture.png" alt="Pepsi Products" class="card-image">
+      </div>
+
+      <div class="card modify-inventory">
+        <div>
+          <h2 class="card-title">Modificar inventario</h2>
+          <p class="card-subtitle">Cambiar el stock</p>
+        </div>
+        <img src="photos/Pepsi_Fridge.png" alt="Pepsi Fridge" class="card-image">
+      </div>
+
+      <div class="card view-inventory">
+        <div>
+          <h2 class="card-title">Ver inventario</h2>
+          <p class="card-subtitle">Todos los productos</p>
+        </div>
+        <img src="photos/Products.png" alt="Pepsi Products Group" class="card-image">
+      </div>
+
+      <div class="card welcome">
+        <div>
+          <h2 class="card-title">Bienvenido</h2>
+          <p class="card-subtitle">Gestión de Productos</p>
+        </div>
+        <i class="fas fa-glass-cheers card-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('toggle-sidebar')?.addEventListener('click', function () {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', function () {
+      body.classList.toggle('light-mode');
+      themeToggle.innerHTML = body.classList.contains('light-mode')
+        ? '<i class="fas fa-moon"></i>'
+        : '<i class="fas fa-sun"></i>';
+    });
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function () {
+        console.log('Card clicked:', this.querySelector('.card-title').textContent);
+      });
+    });
+
+    document.querySelector('.logout-btn').addEventListener('click', function () {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                alert('Sesión cerrada');
+                window.location.href = 'login.html';
             }
         });
-        
-        // Card click events
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('click', function() {
-                // You can add navigation or modal functionality here
-                console.log('Card clicked:', this.querySelector('.card-title').textContent);
-            });
-        });
-    </script>
+  </script>
 </body>
 </html>

@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
+    <!-- Importando las fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
         
         body {
-            background-color: #1f2937;
+            background-color: #30343F;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .login-container {
@@ -25,25 +27,33 @@
             border-radius: 1rem;
             padding: 2rem;
             width: 100%;
-            max-width: 450px;
+            max-width: 600px; /* Aumentado el ancho del contenedor */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
         }
         
         .logo-container {
+            flex: 0 0 180px; /* Aumentado el espacio para el logo */
             display: flex;
+            align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-right: 2rem;
         }
         
         .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 200px; /* Aumentado el tamaño del logo */
+            height: 200px; /* Aumentado el tamaño del logo */
+            border-radius: 0%;
             object-fit: contain;
         }
         
+        .form-container {
+            flex: 1;
+        }
+        
         h1 {
-            text-align: center;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
         }
@@ -68,6 +78,13 @@
             border: 1px solid #ccc;
             border-radius: 0.25rem;
             font-size: 1rem;
+            font-family: 'Work Sans', sans-serif;
+        }
+        
+        /* Añadiendo padding-left para todos los inputs con íconos */
+        input[type="email"], 
+        input[type="password"] {
+            padding-left: 2.5rem;
         }
         
         .icon {
@@ -83,10 +100,6 @@
         .icon-right {
             right: 0.5rem;
             cursor: pointer;
-        }
-        
-        input[type="email"] {
-            padding-left: 2.5rem;
         }
         
         .forgot-password {
@@ -107,8 +120,9 @@
             background-color: #1e3a8a;
             color: white;
             border: none;
-            border-radius: 0.25rem;
+            border-radius: 2rem; /* Bordes más redondeados para el botón */
             font-size: 1rem;
+            font-family: 'Work Sans', sans-serif;
             cursor: pointer;
             margin-bottom: 1.5rem;
             transition: background-color 0.2s;
@@ -133,52 +147,54 @@
 <body>
     <div class="login-container">
         <div class="logo-container">
-            <img src="https://1000logos.net/wp-content/uploads/2017/05/Pepsi-Logo.png" alt="Logo de Pepsi" class="logo">
+            <img src="photos/Pepsi-Logo.jpg" alt="Logo de Pepsi" class="logo">
         </div>
         
-        <h1>Iniciar sesión</h1>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <div class="input-container">
-                    <span class="icon icon-left">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z"/>
-                        </svg>
-                    </span>
-                    <input type="email" id="email" name="email" required>
+        <div class="form-container">
+            <h1>Iniciar sesión</h1>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <div class="input-container">
+                        <span class="icon icon-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z"/>
+                            </svg>
+                        </span>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <div class="input-container">
-                    <span class="icon icon-left">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
-                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                        </svg>
-                    </span>
-                    <input type="password" id="password" name="password" required>
-                    <span class="icon icon-right" id="togglePassword">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
-                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                        </svg>
-                    </span>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-container">
+                        <span class="icon icon-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
+                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                            </svg>
+                        </span>
+                        <input type="password" id="password" name="password" required>
+                        <span class="icon icon-right" id="togglePassword">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="forgot-password">
-                <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
-            
-            <button type="submit" class="btn-login">Iniciar sesión</button>
-            
-            <div class="register">
-                <p>¿No tienes una cuenta? <a href="#">Regístrate aquí</a></p>
-            </div>
-        </form>
+                
+                <div class="forgot-password">
+                    <a href="passwordRecovery.html">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="btn-login">Iniciar sesión</button>
+                
+                <div class="register">
+                    <p>¿No tienes una cuenta? <a href="createAccount.html">Regístrate aquí</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -191,20 +207,20 @@
                 const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
                 password.setAttribute('type', type);
                 
-                // Toggle eye icon
+                // Simplemente cambiamos el color del icono para indicar el estado
+                // Usamos un solo icono (ojo) pero con diferente opacidad
                 if (type === 'password') {
-                    this.innerHTML = `
+                    togglePassword.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
                             <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                             <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                         </svg>
                     `;
                 } else {
-                    this.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16">
-                            <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
-                            <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
-                            <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                    togglePassword.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#777" viewBox="0 0 16 16" style="opacity: 0.7;">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                         </svg>
                     `;
                 }
@@ -222,6 +238,7 @@
                 
                 // Simulación de envío exitoso
                 alert('Inicio de sesión exitoso!');
+                window.location.href = 'home.html';
             });
         });
     </script>

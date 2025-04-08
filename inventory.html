@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAP - Sistema de Ventas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 180px;
+            background-color: #30343F;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 3px solid #0084ff;
+            font-weight: 500;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .menu-item i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            margin-left: 16px;
+            margin-right: 16px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            margin-left: 180px;
+            height: 100vh;
+        }
+
+        .content-area {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .add-product-btn {
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .add-product-btn:hover {
+            background-color: #0066cc;
+        }
+
+        .add-product-btn i {
+            margin-right: 8px;
+        }
+
+        .products-table-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .action-btn {
+            background-color: #30343F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background-color: #232c3d;
+        }
+
+        .action-cell {
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            border-color: #0084ff;
+            outline: none;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e0e0e0;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            margin-left: 8px;
+        }
+
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #0084ff;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #ff3b30;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d0d0d0;
+        }
+
+        .btn-primary:hover {
+            background-color: #0066cc;
+        }
+
+        .btn-danger:hover {
+            background-color: #e02e24;
+        }
+
+        /* Action Menu */
+        .action-menu {
+            position: absolute;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            z-index: 10;
+            min-width: 150px;
+            display: none;
+        }
+
+        .action-menu-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-menu-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .action-menu-item i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .stock-warning {
+            color: #ff3b30;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -200px;
+                top: 0;
+                height: 100%;
+                z-index: 100;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 101;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">SIAP •</div>
+            <button class="theme-toggle">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+
+        <a href="home.html" class="menu-item active">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+
+        <a href="sales.html" class="menu-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Ventas</span>
+        </a>
+
+        <a href="customer.html" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Clientes</span>
+        </a>
+
+        <a href="#" class="menu-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+        </a>
+
+        <a href="#" class="menu-item">
+            <i class="fas fa-book"></i>
+            <span>Catálogo</span>
+        </a>
+
+        <a href="inventory.html" class="menu-item">
+            <i class="fas fa-boxes"></i>
+            <span>Inventario</span>
+        </a>
+
+        <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Ajustes</span>
+        </a>
+
+        <button class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="content-area">
+            <div class="products-header">
+                <h2>Inventario de Productos</h2>
+                <button class="add-product-btn" id="add-product-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Añadir Producto</span>
+                </button>
+            </div>
+            
+            <div class="products-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-tag"></i> Nombre</th>
+                            <th><i class="fas fa-barcode"></i> Código</th>
+                            <th><i class="fas fa-dollar-sign"></i> Precio</th>
+                            <th><i class="fas fa-boxes"></i> Piezas</th>
+                            <th><i class="fas fa-cog"></i> Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pepsi 500ml</td>
+                            <td>1234241256745</td>
+                            <td>12</td>
+                            <td>5</td>
+                            <td class="action-cell">
+                                <button class="action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Pepsi 250ml</td>
+                            <td>3141331636767</td>
+                            <td>7</td>
+                            <td>3</td>
+                            <td class="action-cell">
+                                <button class="action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Pepsi 3L</td>
+                            <td>2416474723424</td>
+                            <td>26</td>
+                            <td>4</td>
+                            <td class="action-cell">
+                                <button class="action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Pepsi 2L</td>
+                            <td>1241554574575</td>
+                            <td>19</td>
+                            <td>1</td>
+                            <td class="action-cell">
+                                <button class="action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mirinda 500ml</td>
+                            <td>1637345343638</td>
+                            <td class="stock-warning">12</td>
+                            <td class="stock-warning">0</td>
+                            <td class="action-cell">
+                                <button class="action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para añadir producto -->
+    <div class="modal" id="add-product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Añadir Nuevo Producto</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-product-form">
+                    <div class="form-group">
+                        <label class="form-label" for="product-name">Nombre del producto</label>
+                        <input type="text" class="form-input" id="product-name" placeholder="Nombre del producto" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="product-code">Código de barras</label>
+                        <input type="text" class="form-input" id="product-code" placeholder="Código de barras" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="product-price">Precio</label>
+                        <input type="number" class="form-input" id="product-price" placeholder="Precio" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="product-stock">Piezas en inventario</label>
+                        <input type="number" class="form-input" id="product-stock" placeholder="Piezas" min="0" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-add">Cancelar</button>
+                <button class="btn btn-primary" id="save-add">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar producto -->
+    <div class="modal" id="edit-product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Editar Producto</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-product-form">
+                    <div class="form-group">
+                        <label class="form-label" for="edit-product-name">Nombre del producto</label>
+                        <input type="text" class="form-input" id="edit-product-name" placeholder="Nombre del producto" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-product-code">Código de barras</label>
+                        <input type="text" class="form-input" id="edit-product-code" placeholder="Código de barras" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-product-price">Precio</label>
+                        <input type="number" class="form-input" id="edit-product-price" placeholder="Precio" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="edit-product-stock">Piezas en inventario</label>
+                        <input type="number" class="form-input" id="edit-product-stock" placeholder="Piezas" min="0" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="delete-product">Eliminar</button>
+                <button class="btn btn-secondary" id="cancel-edit">Cancelar</button>
+                <button class="btn btn-primary" id="save-edit">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu de acciones -->
+    <div class="action-menu" id="action-menu">
+        <div class="action-menu-item" id="edit-product-option">
+            <i class="fas fa-edit"></i>
+            <span>Editar</span>
+        </div>
+        <div class="action-menu-item" id="delete-product-option">
+            <i class="fas fa-trash"></i>
+            <span>Eliminar</span>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('light-mode');
+                themeToggle.innerHTML = body.classList.contains('light-mode') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            });
+        }
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function () {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+
+        document.querySelector('.logout-btn').addEventListener('click', function () {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                alert('Sesión cerrada');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Modales
+        const addProductModal = document.getElementById('add-product-modal');
+        const editProductModal = document.getElementById('edit-product-modal');
+        const actionMenu = document.getElementById('action-menu');
+        
+        // Botón para añadir producto
+        document.getElementById('add-product-btn').addEventListener('click', function() {
+            addProductModal.style.display = 'flex';
+        });
+
+        // Cerrar modales al hacer clic en X
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                addProductModal.style.display = 'none';
+                editProductModal.style.display = 'none';
+            });
+        });
+
+        // Cerrar modales al hacer clic fuera de ellos
+        window.addEventListener('click', function(event) {
+            if (event.target === addProductModal) {
+                addProductModal.style.display = 'none';
+            }
+            if (event.target === editProductModal) {
+                editProductModal.style.display = 'none';
+            }
+            // Ocultar menú de acciones al hacer clic fuera
+            if (!event.target.closest('.action-btn') && !event.target.closest('.action-menu')) {
+                actionMenu.style.display = 'none';
+            }
+        });
+
+        // Botones para cancelar
+        document.getElementById('cancel-add').addEventListener('click', function() {
+            addProductModal.style.display = 'none';
+        });
+
+        document.getElementById('cancel-edit').addEventListener('click', function() {
+            editProductModal.style.display = 'none';
+        });
+
+        // Guardar nuevo producto
+        document.getElementById('save-add').addEventListener('click', function() {
+            const form = document.getElementById('add-product-form');
+            const name = document.getElementById('product-name').value;
+            const code = document.getElementById('product-code').value;
+            const price = document.getElementById('product-price').value;
+            const stock = document.getElementById('product-stock').value;
+            
+            if (name && code && price && stock) {
+                alert(`Producto añadido: ${name}`);
+                addProductModal.style.display = 'none';
+                
+                // Aquí puedes añadir la lógica para agregar el producto a la tabla
+                const tbody = document.querySelector('tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${name}</td>
+                    <td>${code}</td>
+                    <td>${price}</td>
+                    <td>${stock}</td>
+                    <td class="action-cell">
+                        <button class="action-btn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+                
+                // Limpiar formulario
+                form.reset();
+                
+                // Agregar evento al nuevo botón de acción
+                const newActionBtn = newRow.querySelector('.action-btn');
+                setupActionButton(newActionBtn);
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        });
+
+        // Funcionalidad para los botones de acción
+        function setupActionButton(button) {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const rect = this.getBoundingClientRect();
+                actionMenu.style.display = 'block';
+                actionMenu.style.top = rect.bottom + 'px';
+                actionMenu.style.left = rect.left + 'px';
+                
+                // Guardar referencia a la fila actual
+                actionMenu.dataset.row = this.closest('tr').rowIndex;
+            });
+        }
+        
+        const actionButtons = document.querySelectorAll('.action-btn');
+        actionButtons.forEach(setupActionButton);
+
+        // Opción de editar producto
+        document.getElementById('edit-product-option').addEventListener('click', function() {
+            const rowIndex = actionMenu.dataset.row;
+            const row = document.querySelector('table').rows[rowIndex];
+            
+            // Rellenar el formulario de edición con los datos actuales
+            document.getElementById('edit-product-name').value = row.cells[0].textContent;
+            document.getElementById('edit-product-code').value = row.cells[1].textContent;
+            document.getElementById('edit-product-price').value = row.cells[2].textContent;
+            document.getElementById('edit-product-stock').value = row.cells[3].textContent;
+            
+            // Ocultar el menú de acciones y mostrar el modal de edición
+            actionMenu.style.display = 'none';
+            editProductModal.style.display = 'flex';
+        });
+
+        // Opción de eliminar producto directamente desde el menú
+        document.getElementById('delete-product-option').addEventListener('click', function() {
+            const rowIndex = actionMenu.dataset.row;
+            const row = document.querySelector('table').rows[rowIndex];
+            const productName = row.cells[0].textContent;
+            
+            if (confirm(`¿Estás seguro de que deseas eliminar "${productName}"?`)) {
+                row.remove();
+                alert(`Producto "${productName}" eliminado.`);
+            }
+            
+            actionMenu.style.display = 'none';
+        });
+
+        // Guardar cambios de edición
+        document.getElementById('save-edit').addEventListener('click', function() {
+            const rowIndex = actionMenu.dataset.row;
+            const row = document.querySelector('table').rows[rowIndex];
+            
+            // Actualizar los datos de la fila
+            row.cells[0].textContent = document.getElementById('edit-product-name').value;
+            row.cells[1].textContent = document.getElementById('edit-product-code').value;
+            row.cells[2].textContent = document.getElementById('edit-product-price').value;
+            row.cells[3].textContent = document.getElementById('edit-product-stock').value;
+            
+            // Cerrar el modal
+            editProductModal.style.display = 'none';
+            alert('Producto actualizado exitosamente.');
+        });
+
+        // Eliminar producto desde el modal de edición
+        document.getElementById('delete-product').addEventListener('click', function() {
+            const rowIndex = actionMenu.dataset.row;
+            const row = document.querySelector('table').rows[rowIndex];
+            const productName = row.cells[0].textContent;
+            
+            if (confirm(`¿Estás seguro de que deseas eliminar "${productName}"?`)) {
+                row.remove();
+                editProductModal.style.display = 'none';
+                alert(`Producto "${productName}" eliminado.`);
+            }
+        });
+    </script>
+</body>
+</html>
