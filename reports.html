@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAP - Reportes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="styles/reportsStyle.css">
+</head>
+<body>
+    <button class="sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            
+        </div>
+
+        <a href="home.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+
+        <a href="sales.html" class="menu-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Ventas</span>
+        </a>
+
+        <a href="customer.html" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Clientes</span>
+        </a>
+
+        <a href="reports.html" class="menu-item active">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+        </a>
+
+        <a href="inventory.html" class="menu-item">
+            <i class="fas fa-boxes"></i>
+            <span>Inventario</span>
+        </a>
+
+        <a href="branches.html" class="menu-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Sucursales</span>
+        </a>
+
+        <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Ajustes</span>
+        </a>
+
+        <button class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>
+    </div>
+
+    <!-- NUEVO: Logo flotante que se mueve con el sidebar -->
+    <div class="floating-logo" id="floating-logo">
+        <div class="logo">SIAP </div>
+        <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+    </div>
+
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Reportes y Estadísticas</h1>
+        </div>
+
+        <div class="content-area">
+            <div class="date-filters">
+                <h2>Filtros de Fecha</h2>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="date-range">Rango predefinido:</label>
+                        <select id="date-range">
+                            <option value="today">Hoy</option>
+                            <option value="yesterday">Ayer</option>
+                            <option value="this-week">Esta semana</option>
+                            <option value="last-week">Semana pasada</option>
+                            <option value="this-month">Este mes</option>
+                            <option value="last-month">Mes anterior</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group" id="custom-date-start">
+                        <label for="start-date">Fecha inicial:</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    
+                    <div class="filter-group" id="custom-date-end">
+                        <label for="end-date">Fecha final:</label>
+                        <input type="date" id="end-date">
+                    </div>
+                    
+                    <div class="filter-buttons">
+                        <button class="apply-btn">Aplicar</button>
+                        <button class="reset-btn">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjetas de estadísticas -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-card-title">Ventas Totales</div>
+                    <div class="stat-card-value">$28,467</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 12.5% vs periodo anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-title">Transacciones</div>
+                    <div class="stat-card-value">342</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.2% vs periodo anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-title">Ticket Promedio</div>
+                    <div class="stat-card-value">$83.24</div>
+                    <div class="stat-card-change positive">
+                        <i class="fas fa-arrow-up"></i> 4.1% vs periodo anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-title">Artículos Vendidos</div>
+                    <div class="stat-card-value">876</div>
+                    <div class="stat-card-change negative">
+                        <i class="fas fa-arrow-down"></i> 2.3% vs periodo anterior
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico principal -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2>Ventas por Período</h2>
+                    <div class="chart-actions">
+                        <button id="download-sales-chart"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+                <div id="chart-type-selector">
+                    <button class="chart-type-btn active" data-type="line">Líneas</button>
+                    <button class="chart-type-btn" data-type="bar">Barras</button>
+                    <button class="chart-type-btn" data-type="area">Área</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="sales-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Grid de gráficos pequeños -->
+            <div class="charts-grid">
+                <div class="small-chart-container">
+                    <div class="small-chart-header">
+                        <h3>Productos Más Vendidos</h3>
+                        <button class="download-chart-btn" data-chart="products-chart"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="small-chart-wrapper">
+                        <canvas id="products-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="small-chart-container">
+                    <div class="small-chart-header">
+                        <h3>Ventas por Categoría</h3>
+                        <button class="download-chart-btn" data-chart="categories-chart"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="small-chart-wrapper">
+                        <canvas id="categories-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="small-chart-container">
+                    <div class="small-chart-header">
+                        <h3>Métodos de Pago</h3>
+                        <button class="download-chart-btn" data-chart="payment-chart"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="small-chart-wrapper">
+                        <canvas id="payment-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="small-chart-container">
+                    <div class="small-chart-header">
+                        <h3>Horarios de Venta</h3>
+                        <button class="download-chart-btn" data-chart="hours-chart"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="small-chart-wrapper">
+                        <canvas id="hours-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjetas de reportes -->
+            <div class="reports-container">
+                <div class="report-card" id="sales-report">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h3>Reporte de Ventas</h3>
+                    <p>Resumen de ventas, ingresos y artículos más vendidos.</p>
+                </div>
+                
+                <div class="report-card" id="inventory-report">
+                    <i class="fas fa-boxes"></i>
+                    <h3>Reporte de Inventario</h3>
+                    <p>Estado actual del inventario, rotación y alertas de stock.</p>
+                </div>
+                
+                <div class="report-card" id="customer-report">
+                    <i class="fas fa-users"></i>
+                    <h3>Reporte de Clientes</h3>
+                    <p>Análisis de clientes y comportamiento de compra.</p>
+                </div>
+                
+                <div class="report-card" id="cashflow-report">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Flujo de Caja</h3>
+                    <p>Reporte de ingresos y egresos diarios.</p>
+                </div>
+                
+                <div class="report-card" id="tax-report">
+                    <i class="fas fa-receipt"></i>
+                    <h3>Reporte Fiscal</h3>
+                    <p>Resumen de impuestos y emisión de documentos fiscales.</p>
+                </div>
+                
+                <div class="report-card" id="custom-report">
+                    <i class="fas fa-sliders-h"></i>
+                    <h3>Reporte Personalizado</h3>
+                    <p>Crea un reporte con los parámetros que necesites.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales para reportes -->
+    <div id="sales-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte de Ventas</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Gráfico dentro del modal -->
+                <div class="chart-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="modal-sales-chart"></canvas>
+                </div>
+                
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>No. Venta</th>
+                            <th>Cliente</th>
+                            <th>Productos</th>
+                            <th>Total</th>
+                            <th>Método de Pago</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>27/04/2025</td>
+                            <td>#8452</td>
+                            <td>Cliente Frecuente</td>
+                            <td>5</td>
+                            <td>$1,250.00</td>
+                            <td>Efectivo</td>
+                            <td>Completada</td>
+                        </tr>
+                        <tr>
+                            <td>27/04/2025</td>
+                            <td>#8451</td>
+                            <td>Juan Pérez</td>
+                            <td>2</td>
+                            <td>$350.00</td>
+                            <td>Tarjeta</td>
+                            <td>Completada</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>#8450</td>
+                            <td>María González</td>
+                            <td>3</td>
+                            <td>$780.00</td>
+                            <td>Transferencia</td>
+                            <td>Completada</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>#8449</td>
+                            <td>Roberto Sánchez</td>
+                            <td>1</td>
+                            <td>$120.00</td>
+                            <td>Efectivo</td>
+                            <td>Completada</td>
+                        </tr>
+                        <tr>
+                            <td>25/04/2025</td>
+                            <td>#8448</td>
+                            <td>Ana López</td>
+                            <td>4</td>
+                            <td>$895.00</td>
+                            <td>Tarjeta</td>
+                            <td>Completada</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-stats">
+                    <h3>Resumen</h3>
+                    <p><strong>Total ventas:</strong> 5</p>
+                    <p><strong>Total ingresos:</strong> $3,395.00</p>
+                    <p><strong>Promedio por venta:</strong> $679.00</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inventory-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte de Inventario</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Gráfico dentro del modal -->
+                <div class="chart-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="modal-inventory-chart"></canvas>
+                </div>
+                
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Stock Actual</th>
+                            <th>Stock Mínimo</th>
+                            <th>Última Reposición</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>P001</td>
+                            <td>Producto A</td>
+                            <td>Categoría 1</td>
+                            <td>15</td>
+                            <td>5</td>
+                            <td>20/04/2025</td>
+                            <td>Normal</td>
+                        </tr>
+                        <tr>
+                            <td>P002</td>
+                            <td>Producto B</td>
+                            <td>Categoría 2</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>15/04/2025</td>
+                            <td>Bajo</td>
+                        </tr>
+                        <tr>
+                            <td>P003</td>
+                            <td>Producto C</td>
+                            <td>Categoría 1</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>10/04/2025</td>
+                            <td>Agotado</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>15/04/2025</td>
+                            <td>Bajo</td>
+                        </tr>
+                        <tr>
+                            <td>P003</td>
+                            <td>Producto C</td>
+                            <td>Categoría 1</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>10/04/2025</td>
+                            <td>Agotado</td>
+                        </tr>
+                        <tr>
+                            <td>P004</td>
+                            <td>Producto D</td>
+                            <td>Categoría 3</td>
+                            <td>25</td>
+                            <td>8</td>
+                            <td>18/04/2025</td>
+                            <td>Normal</td>
+                        </tr>
+                        <tr>
+                            <td>P005</td>
+                            <td>Producto E</td>
+                            <td>Categoría 2</td>
+                            <td>7</td>
+                            <td>6</td>
+                            <td>22/04/2025</td>
+                            <td>Normal</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-stats">
+                    <h3>Resumen</h3>
+                    <p><strong>Total productos:</strong> 5</p>
+                    <p><strong>Productos con stock bajo:</strong> 1</p>
+                    <p><strong>Productos agotados:</strong> 1</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customer-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte de Clientes</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="modal-customer-chart"></canvas>
+                </div>
+                
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Compras</th>
+                            <th>Total Gastado</th>
+                            <th>Promedio</th>
+                            <th>Última Compra</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>C001</td>
+                            <td>Juan Pérez</td>
+                            <td>12</td>
+                            <td>$3,540.00</td>
+                            <td>$295.00</td>
+                            <td>27/04/2025</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>C002</td>
+                            <td>María González</td>
+                            <td>8</td>
+                            <td>$2,150.00</td>
+                            <td>$268.75</td>
+                            <td>26/04/2025</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>C003</td>
+                            <td>Roberto Sánchez</td>
+                            <td>3</td>
+                            <td>$520.00</td>
+                            <td>$173.33</td>
+                            <td>26/04/2025</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>C004</td>
+                            <td>Ana López</td>
+                            <td>5</td>
+                            <td>$1,275.00</td>
+                            <td>$255.00</td>
+                            <td>25/04/2025</td>
+                            <td>Activo</td>
+                        </tr>
+                        <tr>
+                            <td>C005</td>
+                            <td>José Ramírez</td>
+                            <td>2</td>
+                            <td>$450.00</td>
+                            <td>$225.00</td>
+                            <td>15/04/2025</td>
+                            <td>Inactivo</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-stats">
+                    <h3>Resumen</h3>
+                    <p><strong>Total clientes:</strong> 5</p>
+                    <p><strong>Clientes activos:</strong> 4</p>
+                    <p><strong>Ticket promedio:</strong> $243.42</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cashflow-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte de Flujo de Caja</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="modal-cashflow-chart"></canvas>
+                </div>
+                
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Concepto</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Método</th>
+                            <th>Responsable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>27/04/2025</td>
+                            <td>Ventas del día</td>
+                            <td>Ingreso</td>
+                            <td>$1,600.00</td>
+                            <td>Varios</td>
+                            <td>Admin</td>
+                        </tr>
+                        <tr>
+                            <td>27/04/2025</td>
+                            <td>Pago a proveedor</td>
+                            <td>Egreso</td>
+                            <td>$450.00</td>
+                            <td>Transferencia</td>
+                            <td>Admin</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>Ventas del día</td>
+                            <td>Ingreso</td>
+                            <td>$900.00</td>
+                            <td>Varios</td>
+                            <td>Admin</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>Gastos operativos</td>
+                            <td>Egreso</td>
+                            <td>$120.00</td>
+                            <td>Efectivo</td>
+                            <td>Admin</td>
+                        </tr>
+                        <tr>
+                            <td>25/04/2025</td>
+                            <td>Ventas del día</td>
+                            <td>Ingreso</td>
+                            <td>$895.00</td>
+                            <td>Varios</td>
+                            <td>Admin</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-stats">
+                    <h3>Resumen</h3>
+                    <p><strong>Total ingresos:</strong> $3,395.00</p>
+                    <p><strong>Total egresos:</strong> $570.00</p>
+                    <p><strong>Balance neto:</strong> $2,825.00</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tax-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte Fiscal</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="chart-wrapper" style="margin-bottom: 20px;">
+                    <canvas id="modal-tax-chart"></canvas>
+                </div>
+                
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>No. Factura</th>
+                            <th>Cliente</th>
+                            <th>Subtotal</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>27/04/2025</td>
+                            <td>F-1245</td>
+                            <td>Juan Pérez</td>
+                            <td>$301.72</td>
+                            <td>$48.28</td>
+                            <td>$350.00</td>
+                            <td>Emitida</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>F-1244</td>
+                            <td>María González</td>
+                            <td>$672.41</td>
+                            <td>$107.59</td>
+                            <td>$780.00</td>
+                            <td>Emitida</td>
+                        </tr>
+                        <tr>
+                            <td>26/04/2025</td>
+                            <td>F-1243</td>
+                            <td>Roberto Sánchez</td>
+                            <td>$103.45</td>
+                            <td>$16.55</td>
+                            <td>$120.00</td>
+                            <td>Emitida</td>
+                        </tr>
+                        <tr>
+                            <td>25/04/2025</td>
+                            <td>F-1242</td>
+                            <td>Ana López</td>
+                            <td>$772.41</td>
+                            <td>$122.59</td>
+                            <td>$895.00</td>
+                            <td>Emitida</td>
+                        </tr>
+                        <tr>
+                            <td>24/04/2025</td>
+                            <td>F-1241</td>
+                            <td>José Ramírez</td>
+                            <td>$387.93</td>
+                            <td>$62.07</td>
+                            <td>$450.00</td>
+                            <td>Emitida</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-stats">
+                    <h3>Resumen</h3>
+                    <p><strong>Total facturas:</strong> 5</p>
+                    <p><strong>Subtotal acumulado:</strong> $2,237.92</p>
+                    <p><strong>IVA acumulado:</strong> $357.08</p>
+                    <p><strong>Total facturado:</strong> $2,595.00</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-modal" class="report-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reporte Personalizado</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="date-filters" style="margin-bottom: 20px;">
+                    <h3>Configura tu reporte</h3>
+                    <div class="filters-grid" style="margin-top: 15px;">
+                        <div class="filter-group">
+                            <label for="report-type">Tipo de reporte:</label>
+                            <select id="report-type">
+                                <option value="sales">Ventas</option>
+                                <option value="inventory">Inventario</option>
+                                <option value="customers">Clientes</option>
+                                <option value="cashflow">Flujo de caja</option>
+                                <option value="tax">Fiscal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="group-by">Agrupar por:</label>
+                            <select id="group-by">
+                                <option value="day">Día</option>
+                                <option value="week">Semana</option>
+                                <option value="month">Mes</option>
+                                <option value="category">Categoría</option>
+                                <option value="customer">Cliente</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="custom-start-date">Fecha inicial:</label>
+                            <input type="date" id="custom-start-date">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="custom-end-date">Fecha final:</label>
+                            <input type="date" id="custom-end-date">
+                        </div>
+                    </div>
+                    <button class="apply-btn" style="margin-top: 15px;">Generar Reporte</button>
+                </div>
+                
+                <div id="custom-report-content">
+                    <p style="text-align: center; padding: 20px;">Configura los parámetros y presiona "Generar Reporte" para ver los resultados.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="print-btn"><i class="fas fa-print"></i> Imprimir</button>
+                <button class="export-btn"><i class="fas fa-file-export"></i> Exportar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NUEVO: Elementos principales
+        const floatingLogo = document.getElementById('floating-logo');
+        const sidebar = document.getElementById('sidebar');
+        // NUEVO: Toggle sidebar con el logo flotante
+        if (floatingLogo) {
+            floatingLogo.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+
+
+        // Manejo del sidebar en móvil
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Ocultar/mostrar fechas personalizadas
+        document.getElementById('date-range').addEventListener('change', function() {
+            const customDateStart = document.getElementById('custom-date-start');
+            const customDateEnd = document.getElementById('custom-date-end');
+            
+            if (this.value === 'custom') {
+                customDateStart.style.display = 'flex';
+                customDateEnd.style.display = 'flex';
+            } else {
+                customDateStart.style.display = 'none';
+                customDateEnd.style.display = 'none';
+            }
+        });
+
+        // Inicializar con fechas personalizadas ocultas
+        document.getElementById('custom-date-start').style.display = 'none';
+        document.getElementById('custom-date-end').style.display = 'none';
+
+        // Manejo de los modales
+        const reportCards = document.querySelectorAll('.report-card');
+        reportCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const reportId = this.id;
+                const modalId = reportId.replace('report', 'modal');
+                const modal = document.getElementById(modalId);
+                modal.style.display = 'flex';
+            });
+        });
+
+        // Cerrar modales
+        const closeButtons = document.querySelectorAll('.close-modal');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.report-modal');
+                modal.style.display = 'none';
+            });
+        });
+
+        // Cerrar modal al hacer clic fuera
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.report-modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Cambio de tipo de gráfico
+        const chartTypeButtons = document.querySelectorAll('.chart-type-btn');
+        chartTypeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                chartTypeButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                updateMainChart(this.getAttribute('data-type'));
+            });
+        });
+
+        // Inicialización de gráficos
+        let salesChart, productsChart, categoriesChart, paymentChart, hoursChart;
+        let modalSalesChart, modalInventoryChart, modalCustomerChart, modalCashflowChart, modalTaxChart;
+
+        function initCharts() {
+            // Datos de ejemplo para los gráficos
+            const monthLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const monthData = [4500, 5200, 6100, 5800, 7200, 8100, 7500, 8300, 9100, 8700, 9800, 10200];
+            
+            // Gráfico principal de ventas
+            const salesCtx = document.getElementById('sales-chart').getContext('2d');
+            salesChart = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: monthLabels.slice(0, 4),
+                    datasets: [{
+                        label: 'Ventas 2025',
+                        data: monthData.slice(0, 4),
+                        borderColor: '#2e3b7c',
+                        backgroundColor: 'rgba(46, 59, 124, 0.1)',
+                        tension: 0.3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de productos más vendidos
+            const productsCtx = document.getElementById('products-chart').getContext('2d');
+            productsChart = new Chart(productsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'],
+                    datasets: [{
+                        label: 'Unidades vendidas',
+                        data: [125, 95, 80, 68, 45],
+                        backgroundColor: [
+                            'rgba(46, 59, 124, 0.8)',
+                            'rgba(46, 59, 124, 0.6)',
+                            'rgba(46, 59, 124, 0.4)',
+                            'rgba(46, 59, 124, 0.3)',
+                            'rgba(46, 59, 124, 0.2)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de ventas por categoría
+            const categoriesCtx = document.getElementById('categories-chart').getContext('2d');
+            categoriesChart = new Chart(categoriesCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Categoría 1', 'Categoría 2', 'Categoría 3', 'Categoría 4'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            '#2e3b7c',
+                            '#4c5c9c',
+                            '#6b7dbc',
+                            '#8a9edc'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de métodos de pago
+            const paymentCtx = document.getElementById('payment-chart').getContext('2d');
+            paymentChart = new Chart(paymentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Efectivo', 'Tarjeta', 'Transferencia', 'Otros'],
+                    datasets: [{
+                        data: [40, 35, 20, 5],
+                        backgroundColor: [
+                            '#2e3b7c',
+                            '#4c5c9c',
+                            '#6b7dbc',
+                            '#8a9edc'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de horarios de venta
+            const hoursCtx = document.getElementById('hours-chart').getContext('2d');
+            hoursChart = new Chart(hoursCtx, {
+                type: 'line',
+                data: {
+                    labels: ['8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
+                    datasets: [{
+                        label: 'Ventas por hora',
+                        data: [8, 15, 25, 30, 22, 18, 12],
+                        borderColor: '#2e3b7c',
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Inicializar gráficos en modales
+            initModalCharts();
+        }
+
+        function initModalCharts() {
+            // Modal de ventas
+            if (document.getElementById('modal-sales-chart')) {
+                const modalSalesCtx = document.getElementById('modal-sales-chart').getContext('2d');
+                modalSalesChart = new Chart(modalSalesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                        datasets: [{
+                            label: 'Ventas por día',
+                            data: [450, 580, 620, 490, 780, 950, 525],
+                            backgroundColor: 'rgba(46, 59, 124, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Modal de inventario
+            if (document.getElementById('modal-inventory-chart')) {
+                const modalInventoryCtx = document.getElementById('modal-inventory-chart').getContext('2d');
+                modalInventoryChart = new Chart(modalInventoryCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'],
+                        datasets: [{
+                            label: 'Stock Actual',
+                            data: [15, 3, 0, 25, 7],
+                            backgroundColor: 'rgba(46, 59, 124, 0.7)'
+                        }, {
+                            label: 'Stock Mínimo',
+                            data: [5, 5, 3, 8, 6],
+                            backgroundColor: 'rgba(220, 53, 69, 0.5)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Modal de clientes
+            if (document.getElementById('modal-customer-chart')) {
+                const modalCustomerCtx = document.getElementById('modal-customer-chart').getContext('2d');
+                modalCustomerChart = new Chart(modalCustomerCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Juan Pérez', 'María González', 'Roberto Sánchez', 'Ana López', 'José Ramírez'],
+                        datasets: [{
+                            label: 'Total Gastado ($)',
+                            data: [3540, 2150, 520, 1275, 450],
+                            backgroundColor: 'rgba(46, 59, 124, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y'
+                    }
+                });
+            }
+
+            // Modal de flujo de caja
+            if (document.getElementById('modal-cashflow-chart')) {
+                const modalCashflowCtx = document.getElementById('modal-cashflow-chart').getContext('2d');
+                modalCashflowChart = new Chart(modalCashflowCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                        datasets: [{
+                            label: 'Ingresos',
+                            data: [780, 850, 920, 895, 1100, 1350, 1600],
+                            borderColor: 'rgba(40, 167, 69, 0.7)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            fill: true
+                        }, {
+                            label: 'Egresos',
+                            data: [150, 220, 180, 260, 120, 90, 450],
+                            borderColor: 'rgba(220, 53, 69, 0.7)',
+                            backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Modal fiscal
+            if (document.getElementById('modal-tax-chart')) {
+                const modalTaxCtx = document.getElementById('modal-tax-chart').getContext('2d');
+                modalTaxChart = new Chart(modalTaxCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                        datasets: [{
+                            label: 'Subtotal',
+                            data: [670, 750, 820, 795, 950, 1150, 1380],
+                            backgroundColor: 'rgba(46, 59, 124, 0.7)'
+                        }, {
+                            label: 'IVA',
+                            data: [110, 120, 132, 127, 152, 184, 220],
+                            backgroundColor: 'rgba(108, 117, 125, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: false
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateMainChart(chartType) {
+            let type = chartType;
+            let fill = false;
+            
+            if (chartType === 'area') {
+                type = 'line';
+                fill = true;
+            }
+            
+            salesChart.config.type = type;
+            salesChart.data.datasets[0].fill = fill;
+            salesChart.update();
+        }
+
+        // Iniciar todos los gráficos cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initCharts);
+
+        // Manejo de botones de descarga (simulación)
+        document.getElementById('download-sales-chart').addEventListener('click', function() {
+            alert('Descargando gráfico de ventas...');
+        });
+
+        const downloadButtons = document.querySelectorAll('.download-chart-btn');
+        downloadButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const chartId = this.getAttribute('data-chart');
+                alert(`Descargando gráfico: ${chartId}...`);
+            });
+        });
+
+        // Botones de impresión y exportación en modales
+        const printButtons = document.querySelectorAll('.print-btn');
+        printButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Enviando a impresión...');
+            });
+        });
+
+        const exportButtons = document.querySelectorAll('.export-btn');
+        exportButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Exportando reporte a Excel...');
+            });
+        });
+    </script>

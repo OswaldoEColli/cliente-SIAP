@@ -9,13 +9,9 @@
     <link rel="stylesheet" type="text/css" href="styles/productsSaleStyle.css">
 </head>
 <body>
-
-    
-
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="logo">SIAP •</div>
-            <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+            
         </div>
 
         <a href="home.html" class="menu-item active">
@@ -33,19 +29,19 @@
             <span>Clientes</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="reports.html" class="menu-item">
             <i class="fas fa-chart-bar"></i>
             <span>Reportes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-            <i class="fas fa-book"></i>
-            <span>Catálogo</span>
         </a>
 
         <a href="inventory.html" class="menu-item">
             <i class="fas fa-boxes"></i>
             <span>Inventario</span>
+        </a>
+
+        <a href="branches.html" class="menu-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Sucursales</span>
         </a>
 
         <a href="settings.html" class="menu-item">
@@ -59,150 +55,307 @@
         </button>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <div class="nav-buttons">
-                <div class="nav-button active">Registrar</div>
-                <div class="nav-button">Órdenes</div>
-            </div>
-            <img src="https://innovacraft.com/wp-content/uploads/2023/05/innovacraft-logo.png" alt="InnovaCraft" class="logo">
-            <input type="text" class="search-bar" placeholder="Buscar producto">
-        </div>
-        
-        <div class="content">
-            <div class="cart-section">
-                <div class="cart-items">
-                    <div class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></div>
-                    <div class="cart-message">Agregue productos...</div>
-                </div>
+    <!-- NUEVO: Logo flotante que se mueve con el sidebar -->
+    <div class="floating-logo" id="floating-logo">
+        <div class="logo">SIAP </div>
+        <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+    </div>
 
-                <!-- Total above the divider line -->
-                <div class="cart-footer">
-                    <div class="cart-total">
-                        <span>Total: </span>
-                        <span id="cart-total">0.00</span>
-                    </div>
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <div class="nav-buttons">
+                    <div class="nav-button active">Registrar</div>
+                    <div class="nav-button">Órdenes</div>
                 </div>
-
-                <!-- Buttons under the line -->
-                <div class="cart-buttons">
-                    <button class="cart-button">Cliente</button>
-                    <button class="cart-button">Nota</button>
-                    <button class="cart-button" onclick="window.location.href='sumary.html'" style="background-color: #273469; color: white; border-radius: 8px; padding: 10px 20px; border: none; cursor: pointer;">PAGAR</button>
-                </div>
+                <img src="https://innovacraft.com/wp-content/uploads/2023/05/innovacraft-logo.png" alt="InnovaCraft" class="logo">
+                <input type="text" class="search-bar" placeholder="Buscar producto">
             </div>
             
-            <div class="products-grid">
-                <!-- Row 1 -->
-                <div class="product-card" data-price="12.99">
-                    <div class="product-image pepsi-bg">
-                        <img src="photos/pepsi600.png" alt="Pepsi">
+            <div class="content">
+                <div class="cart-section">
+                    <div class="cart-items">
+                        <div class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="cart-message">Agregue productos...</div>
                     </div>
-                    <div class="product-label">Pepsi 600 ml</div>
-                    <div class="product-price">$12.99</div>
+
+                    <!-- Total above the divider line -->
+                    <div class="cart-footer">
+                        <div class="cart-total">
+                            <span>Total: </span>
+                            <span id="cart-total">0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Buttons under the line -->
+                    <div class="cart-buttons">
+                        <button class="cart-button" id="cliente-btn">Cliente</button>
+                        <button class="cart-button" id="nota-btn">Nota</button>
+                        <button class="cart-button" onclick="window.location.href='sumary.html'" style="background-color: #273469; color: white; border-radius: 8px; padding: 10px 20px; border: none; cursor: pointer;">PAGAR</button>
+                    </div>
                 </div>
                 
-                <div class="product-card" data-price="18.50">
-                    <div class="product-image pepsi-bg">
-                        <img src="photos/pepsi1.5.png" alt="Pepsi">
+                <div class="products-grid">
+                    <!-- Row 1 -->
+                    <div class="product-card" data-price="12.99" data-id="pepsi600">
+                        <div class="product-image pepsi-bg">
+                            <img src="photos/pepsi600.png" alt="Pepsi">
+                        </div>
+                        <div class="product-label">Pepsi 600 ml</div>
+                        <div class="product-price">$12.99</div>
                     </div>
-                    <div class="product-label">Pepsi 1.5 L</div>
-                    <div class="product-price">$18.50</div>
-                </div>
-                
-                <div class="product-card" data-price="22.00">
-                    <div class="product-image pepsi-bg">
-                        <img src="photos/pepsi2.5.png" alt="Pepsi">
+                    
+                    <div class="product-card" data-price="18.50" data-id="pepsi1.5">
+                        <div class="product-image pepsi-bg">
+                            <img src="photos/pepsi1.5.png" alt="Pepsi">
+                        </div>
+                        <div class="product-label">Pepsi 1.5 L</div>
+                        <div class="product-price">$18.50</div>
                     </div>
-                    <div class="product-label">Pepsi 2.5 L</div>
-                    <div class="product-price">$22.00</div>
-                </div>
-                
-                <!-- Row 2 -->
-                <div class="product-card" data-price="14.99">
-                    <div class="product-image pepsi-light-bg">
-                        <img src="photos/pepsiL600.png" alt="Pepsi Light">
+                    
+                    <div class="product-card" data-price="22.00" data-id="pepsi2.5">
+                        <div class="product-image pepsi-bg">
+                            <img src="photos/pepsi2.5.png" alt="Pepsi">
+                        </div>
+                        <div class="product-label">Pepsi 2.5 L</div>
+                        <div class="product-price">$22.00</div>
                     </div>
-                    <div class="product-label">Pepsi light 600 ml</div>
-                    <div class="product-price">$14.99</div>
-                </div>
-                
-                <div class="product-card" data-price="15.75">
-                    <div class="product-image manzanita-bg">
-                        <img src="photos/manzanita600.png" alt="Manzanita">
+                    
+                    <!-- Row 2 -->
+                    <div class="product-card" data-price="14.99" data-id="pepsiLight600">
+                        <div class="product-image pepsi-light-bg">
+                            <img src="photos/pepsiL600.png" alt="Pepsi Light">
+                        </div>
+                        <div class="product-label">Pepsi light 600 ml</div>
+                        <div class="product-price">$14.99</div>
                     </div>
-                    <div class="product-label">Manzanita 600 ml</div>
-                    <div class="product-price">$15.75</div>
-                </div>
-                
-                <div class="product-card" data-price="20.00">
-                    <div class="product-image manzanita-bg">
-                        <img src="photos/manzanita1.5.png" alt="Manzanita">
+                    
+                    <div class="product-card" data-price="15.75" data-id="manzanita600">
+                        <div class="product-image manzanita-bg">
+                            <img src="photos/manzanita600.png" alt="Manzanita">
+                        </div>
+                        <div class="product-label">Manzanita 600 ml</div>
+                        <div class="product-price">$15.75</div>
                     </div>
-                    <div class="product-label">Manzanita 1.5 L</div>
-                    <div class="product-price">$20.00</div>
-                </div>
-                
-                <!-- Row 3 -->
-                <div class="product-card" data-price="21.00">
-                    <div class="product-image manzanita-bg">
-                        <img src="photos/manzanita2.5.png" alt="Manzanita">
+                    
+                    <div class="product-card" data-price="20.00" data-id="manzanita1.5">
+                        <div class="product-image manzanita-bg">
+                            <img src="photos/manzanita1.5.png" alt="Manzanita">
+                        </div>
+                        <div class="product-label">Manzanita 1.5 L</div>
+                        <div class="product-price">$20.00</div>
                     </div>
-                    <div class="product-label">Manzanita 2.5 L</div>
-                    <div class="product-price">$21.00</div>
-                </div>
-                
-                <div class="product-card" data-price="16.50">
-                    <div class="product-image mirinda-bg">
-                        <img src="photos/mirinda600.png" alt="Mirinda">
+                    
+                    <!-- Row 3 -->
+                    <div class="product-card" data-price="21.00" data-id="manzanita2.5">
+                        <div class="product-image manzanita-bg">
+                            <img src="photos/manzanita2.5.png" alt="Manzanita">
+                        </div>
+                        <div class="product-label">Manzanita 2.5 L</div>
+                        <div class="product-price">$21.00</div>
                     </div>
-                    <div class="product-label">Mirinda 600 ml</div>
-                    <div class="product-price">$16.50</div>
-                </div>
-                
-                <div class="product-card" data-price="19.00">
-                    <div class="product-image mirinda-bg">
-                        <img src="photos/mirinda1.5.png" alt="Mirinda">
+                    
+                    <div class="product-card" data-price="16.50" data-id="mirinda600">
+                        <div class="product-image mirinda-bg">
+                            <img src="photos/mirinda600.png" alt="Mirinda">
+                        </div>
+                        <div class="product-label">Mirinda 600 ml</div>
+                        <div class="product-price">$16.50</div>
                     </div>
-                    <div class="product-label">Mirinda 1.5 L</div>
-                    <div class="product-price">$19.00</div>
-                </div>
-                
-                <!-- Row 4 -->
-                <div class="product-card" data-price="22.50">
-                    <div class="product-image mirinda-bg">
-                        <img src="photos/mirinda2.5.png" alt="Mirinda">
+                    
+                    <div class="product-card" data-price="19.00" data-id="mirinda1.5">
+                        <div class="product-image mirinda-bg">
+                            <img src="photos/mirinda1.5.png" alt="Mirinda">
+                        </div>
+                        <div class="product-label">Mirinda 1.5 L</div>
+                        <div class="product-price">$19.00</div>
                     </div>
-                    <div class="product-label">Mirinda 2.5 L</div>
-                    <div class="product-price">$22.50</div>
-                </div>
-                
-                <div class="product-card" data-price="25.00">
-                    <div class="product-image sangria-bg">
-                        <img src="photos/sangria600.png" alt="Sangria">
+                    
+                    <!-- Row 4 -->
+                    <div class="product-card" data-price="22.50" data-id="mirinda2.5">
+                        <div class="product-image mirinda-bg">
+                            <img src="photos/mirinda2.5.png" alt="Mirinda">
+                        </div>
+                        <div class="product-label">Mirinda 2.5 L</div>
+                        <div class="product-price">$22.50</div>
                     </div>
-                    <div class="product-label">Sangría 600 ml</div>
-                    <div class="product-price">$25.00</div>
-                </div>
-                
-                <div class="product-card" data-price="17.50">
-                    <div class="product-image seven-up-bg">
-                        <img src="photos/7up600.png" alt="7up">
+                    
+                    <div class="product-card" data-price="25.00" data-id="sangria600">
+                        <div class="product-image sangria-bg">
+                            <img src="photos/sangria600.png" alt="Sangria">
+                        </div>
+                        <div class="product-label">Sangría 600 ml</div>
+                        <div class="product-price">$25.00</div>
                     </div>
-                    <div class="product-label">7up 600 ml</div>
-                    <div class="product-price">$17.50</div>
-                </div>
-                
-                <!-- Add new product button -->
-                <div class="add-button">
-                    <div class="add-icon">+</div>
+                    
+                    <div class="product-card" data-price="17.50" data-id="7up600">
+                        <div class="product-image seven-up-bg">
+                            <img src="photos/7up600.png" alt="7up">
+                        </div>
+                        <div class="product-label">7up 600 ml</div>
+                        <div class="product-price">$17.50</div>
+                    </div>
+                    
+                    <!-- Add new product button -->
+                    <div class="add-button">
+                        <div class="add-icon">+</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal para seleccionar cliente -->
+    <div class="customer-modal" id="customer-modal">
+        <div class="modal-content">
+            <h2>Seleccionar Cliente</h2>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="customer-search" placeholder="Buscar cliente por nombre, RFC o teléfono...">
+            </div>
+
+            <div class="customers-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-user"></i> Nombre</th>
+                            <th><i class="fas fa-id-card"></i> RFC</th>
+                            <th><i class="fas fa-phone"></i> Teléfono</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-circle-check"></i> Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="customer-row" data-id="1">
+                            <td>María González</td>
+                            <td>GOGM8804056P8</td>
+                            <td>55 1234 5678</td>
+                            <td>maria@ejemplo.com</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr class="customer-row" data-id="2">
+                            <td>Juan Pérez</td>
+                            <td>PEPJ760812AB5</td>
+                            <td>55 8765 4321</td>
+                            <td>juan@ejemplo.com</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr class="customer-row" data-id="3">
+                            <td>Lucia Ramírez</td>
+                            <td>RAML9002233M7</td>
+                            <td>55 2233 4455</td>
+                            <td>lucia@ejemplo.com</td>
+                            <td><span class="status-badge status-inactive">Inactivo</span></td>
+                        </tr>
+                        <tr class="customer-row" data-id="4">
+                            <td>Roberto Sánchez</td>
+                            <td>SAGR850615PS1</td>
+                            <td>55 6677 8899</td>
+                            <td>roberto@ejemplo.com</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr class="customer-row" data-id="5">
+                            <td>Ana López</td>
+                            <td>LOPA780930HR2</td>
+                            <td>55 1122 3344</td>
+                            <td>ana@ejemplo.com</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="cancel-customer-modal">Cancelar</button>
+                <button id="new-customer-btn">Nuevo Cliente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para añadir una nota -->
+    <div class="note-modal" id="note-modal">
+        <div class="modal-content">
+            <h2>Añadir Nota</h2>
+            
+            <div class="form-group">
+                <label for="note-text">Nota para la venta:</label>
+                <textarea id="note-text" placeholder="Escriba su nota aquí..." rows="5"></textarea>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="cancel-note-modal">Cancelar</button>
+                <button id="save-note">Guardar</button>
+            </div>
+        </div>
+    </div>
     
+    <!-- Modal para agregar/editar cliente -->
+    <div class="customer-add-modal" id="customer-add-modal">
+        <div class="modal-content">
+            <h2>Nuevo Cliente</h2>
+            
+            <div class="form-group">
+                <label for="customer-name">Nombre completo</label>
+                <input type="text" id="customer-name" placeholder="Nombre del cliente">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="customer-rfc">RFC</label>
+                    <input type="text" id="customer-rfc" placeholder="RFC">
+                </div>
+                <div class="form-group">
+                    <label for="customer-phone">Teléfono</label>
+                    <input type="text" id="customer-phone" placeholder="Teléfono">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="customer-email">Correo electrónico</label>
+                <input type="email" id="customer-email" placeholder="Correo electrónico">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="customer-address">Dirección</label>
+                    <input type="text" id="customer-address" placeholder="Dirección">
+                </div>
+                <div class="form-group">
+                    <label for="customer-status">Estado</label>
+                    <select id="customer-status">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="cancel-add-customer-modal">Cancelar</button>
+                <button id="save-customer">Guardar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // NUEVO: Elementos principales
+            const floatingLogo = document.getElementById('floating-logo');
+            const sidebar = document.getElementById('sidebar');
+            
+            // NUEVO: Toggle sidebar con el logo flotante
+            if (floatingLogo) {
+                floatingLogo.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            // NUEVO: Inicializar para dispositivos móviles
+            if (window.innerWidth <= 768) {
+                // En móviles, sidebar comienza oculto
+                sidebar.classList.add('active');
+            }
+
             const navButtons = document.querySelectorAll('.nav-button');
             navButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -215,103 +368,249 @@
             const cartItems = document.querySelector('.cart-items');
             const cartTotal = document.getElementById('cart-total');
             let totalPrice = 0;
+            let cartProducts = {}; // Objeto para almacenar los productos en el carrito
 
             productCards.forEach(card => {
                 card.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
                     const productName = this.querySelector('.product-label').textContent;
                     const productPrice = parseFloat(this.getAttribute('data-price'));
                     const productBg = this.querySelector('.product-image').className.split(' ')[1];
 
-                    // Clear cart placeholder on first item
-                    const cartEmpty = cartItems.children.length === 0;
-                    if (cartEmpty) {
+                    // Limpiar mensaje de carrito vacío
+                    if (cartItems.querySelector('.cart-icon')) {
                         cartItems.innerHTML = '';
                     }
 
-                    // Create new cart item
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'cart-item';
-                    cartItem.setAttribute('data-product', productName);
-                    cartItem.style.display = 'flex';
-                    cartItem.style.justifyContent = 'space-between';
-                    cartItem.style.alignItems = 'center';
-                    cartItem.style.padding = '10px 5px';
-                    cartItem.style.borderBottom = '1px solid #eee';
-                    cartItem.style.width = '100%';
-
-                    const productInfo = document.createElement('div');
-                    productInfo.className = 'product-info';
-                    productInfo.textContent = `${productName} - $${productPrice.toFixed(2)}`;
-
-                    const controls = document.createElement('div');
-                    controls.className = 'quantity-controls';
-                    controls.style.display = 'flex';
-                    controls.style.alignItems = 'center';
-
-                    const decreaseBtn = document.createElement('button');
-                    decreaseBtn.textContent = '-';
-                    decreaseBtn.style.width = '25px';
-                    decreaseBtn.style.height = '25px';
-                    decreaseBtn.style.border = '1px solid #ddd';
-                    decreaseBtn.style.background = 'white';
-                    decreaseBtn.style.borderRadius = '4px';
-                    decreaseBtn.style.cursor = 'pointer';
-
-                    const quantity = document.createElement('span');
-                    quantity.className = 'item-quantity';
-                    quantity.textContent = '1';
-                    quantity.style.margin = '0 10px';
-                    quantity.style.minWidth = '20px';
-                    quantity.style.textAlign = 'center';
-
-                    const increaseBtn = document.createElement('button');
-                    increaseBtn.textContent = '+';
-                    increaseBtn.style.width = '25px';
-                    increaseBtn.style.height = '25px';
-                    increaseBtn.style.border = '1px solid #ddd';
-                    increaseBtn.style.background = 'white';
-                    increaseBtn.style.borderRadius = '4px';
-                    increaseBtn.style.cursor = 'pointer';
-
-                    controls.appendChild(decreaseBtn);
-                    controls.appendChild(quantity);
-                    controls.appendChild(increaseBtn);
-
-                    cartItem.appendChild(productInfo);
-                    cartItem.appendChild(controls);
-
-                    cartItems.appendChild(cartItem);
-
-                    // Update total price
-                    totalPrice += productPrice;
-                    cartTotal.textContent = totalPrice.toFixed(2);
-
-                    // Quantity control buttons
-                    decreaseBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        let qty = parseInt(quantity.textContent);
-                        qty--;
+                    // Revisar si el producto ya existe en el carrito
+                    if (cartProducts[productId]) {
+                        // Incrementar cantidad
+                        const cartItem = document.querySelector(`[data-product-id="${productId}"]`);
+                        const quantityElem = cartItem.querySelector('.item-quantity');
+                        let qty = parseInt(quantityElem.textContent) + 1;
+                        quantityElem.textContent = qty;
                         
-                        if (qty <= 0) {
-                            cartItems.removeChild(cartItem);
-                            totalPrice -= productPrice;
-                            cartTotal.textContent = totalPrice.toFixed(2);
-                        } else {
-                            quantity.textContent = qty;
-                            totalPrice -= productPrice;
-                            cartTotal.textContent = totalPrice.toFixed(2);
-                        }
-                    });
-
-                    increaseBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        let qty = parseInt(quantity.textContent);
-                        qty++;
-                        quantity.textContent = qty;
+                        // Actualizar total
                         totalPrice += productPrice;
                         cartTotal.textContent = totalPrice.toFixed(2);
-                    });
+                        
+                        // Actualizar objeto de productos
+                        cartProducts[productId].quantity = qty;
+                    } else {
+                        // Crear nuevo item para el carrito
+                        createCartItem(productId, productName, productPrice);
+                        
+                        // Actualizar total
+                        totalPrice += productPrice;
+                        cartTotal.textContent = totalPrice.toFixed(2);
+                        
+                        // Agregar a objeto de productos
+                        cartProducts[productId] = {
+                            name: productName,
+                            price: productPrice,
+                            quantity: 1
+                        };
+                    }
                 });
+            });
+
+            function createCartItem(productId, productName, productPrice) {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.setAttribute('data-product', productName);
+                cartItem.setAttribute('data-product-id', productId);
+                cartItem.style.display = 'flex';
+                cartItem.style.justifyContent = 'space-between';
+                cartItem.style.alignItems = 'center';
+                cartItem.style.padding = '10px 5px';
+                cartItem.style.borderBottom = '1px solid #eee';
+                cartItem.style.width = '100%';
+
+                const productInfo = document.createElement('div');
+                productInfo.className = 'product-info';
+                productInfo.textContent = `${productName} - $${productPrice.toFixed(2)}`;
+
+                const controls = document.createElement('div');
+                controls.className = 'quantity-controls';
+                controls.style.display = 'flex';
+                controls.style.alignItems = 'center';
+
+                const decreaseBtn = document.createElement('button');
+                decreaseBtn.textContent = '-';
+                decreaseBtn.style.width = '25px';
+                decreaseBtn.style.height = '25px';
+                decreaseBtn.style.border = '1px solid #ddd';
+                decreaseBtn.style.background = 'white';
+                decreaseBtn.style.borderRadius = '4px';
+                decreaseBtn.style.cursor = 'pointer';
+
+                const quantity = document.createElement('span');
+                quantity.className = 'item-quantity';
+                quantity.textContent = '1';
+                quantity.style.margin = '0 10px';
+                quantity.style.minWidth = '20px';
+                quantity.style.textAlign = 'center';
+
+                const increaseBtn = document.createElement('button');
+                increaseBtn.textContent = '+';
+                increaseBtn.style.width = '25px';
+                increaseBtn.style.height = '25px';
+                increaseBtn.style.border = '1px solid #ddd';
+                increaseBtn.style.background = 'white';
+                increaseBtn.style.borderRadius = '4px';
+                increaseBtn.style.cursor = 'pointer';
+
+                controls.appendChild(decreaseBtn);
+                controls.appendChild(quantity);
+                controls.appendChild(increaseBtn);
+
+                cartItem.appendChild(productInfo);
+                cartItem.appendChild(controls);
+
+                cartItems.appendChild(cartItem);
+
+                // Botones de control de cantidad
+                decreaseBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    let qty = parseInt(quantity.textContent);
+                    qty--;
+                    
+                    if (qty <= 0) {
+                        cartItems.removeChild(cartItem);
+                        totalPrice -= productPrice;
+                        delete cartProducts[productId]; // Eliminar del objeto
+                        
+                        // Si no quedan productos, mostrar mensaje
+                        if (Object.keys(cartProducts).length === 0) {
+                            cartItems.innerHTML = `
+                                <div class="cart-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                                <div class="cart-message">Agregue productos...</div>
+                            `;
+                        }
+                    } else {
+                        quantity.textContent = qty;
+                        totalPrice -= productPrice;
+                        cartProducts[productId].quantity = qty; // Actualizar cantidad
+                    }
+                    
+                    cartTotal.textContent = totalPrice.toFixed(2);
+                });
+
+                increaseBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    let qty = parseInt(quantity.textContent);
+                    qty++;
+                    quantity.textContent = qty;
+                    totalPrice += productPrice;
+                    cartTotal.textContent = totalPrice.toFixed(2);
+                    cartProducts[productId].quantity = qty; // Actualizar cantidad
+                });
+            }
+
+            // Modal de clientes
+            const clienteBtn = document.getElementById('cliente-btn');
+            const customerModal = document.getElementById('customer-modal');
+            const cancelCustomerModal = document.getElementById('cancel-customer-modal');
+            const customerRows = document.querySelectorAll('.customer-row');
+            
+            clienteBtn.addEventListener('click', function() {
+                customerModal.style.display = 'flex';
+            });
+            
+            cancelCustomerModal.addEventListener('click', function() {
+                customerModal.style.display = 'none';
+            });
+            
+            customerRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const customerName = this.cells[0].textContent;
+                    clienteBtn.textContent = customerName;
+                    customerModal.style.display = 'none';
+                });
+            });
+            
+            // Búsqueda de clientes
+            const customerSearch = document.getElementById('customer-search');
+            customerSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                customerRows.forEach(row => {
+                    const name = row.cells[0].textContent.toLowerCase();
+                    const rfc = row.cells[1].textContent.toLowerCase();
+                    const phone = row.cells[2].textContent.toLowerCase();
+                    
+                    if (name.includes(searchTerm) || rfc.includes(searchTerm) || phone.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Modal de notas
+            const notaBtn = document.getElementById('nota-btn');
+            const noteModal = document.getElementById('note-modal');
+            const cancelNoteModal = document.getElementById('cancel-note-modal');
+            const saveNote = document.getElementById('save-note');
+            const noteText = document.getElementById('note-text');
+            
+            notaBtn.addEventListener('click', function() {
+                noteModal.style.display = 'flex';
+            });
+            
+            cancelNoteModal.addEventListener('click', function() {
+                noteModal.style.display = 'none';
+            });
+            
+            saveNote.addEventListener('click', function() {
+                if (noteText.value.trim() !== '') {
+                    notaBtn.innerHTML = '<i class="fas fa-sticky-note"></i> ' + noteText.value.substring(0, 10) + '...';
+                }
+                noteModal.style.display = 'none';
+            });
+
+            // Modal para nuevo cliente
+            const newCustomerBtn = document.getElementById('new-customer-btn');
+            const customerAddModal = document.getElementById('customer-add-modal');
+            const cancelAddCustomerModal = document.getElementById('cancel-add-customer-modal');
+            const saveCustomer = document.getElementById('save-customer');
+            
+            newCustomerBtn.addEventListener('click', function() {
+                customerModal.style.display = 'none';
+                customerAddModal.style.display = 'flex';
+            });
+            
+            cancelAddCustomerModal.addEventListener('click', function() {
+                customerAddModal.style.display = 'none';
+                customerModal.style.display = 'flex';
+            });
+            
+            saveCustomer.addEventListener('click', function() {
+                const name = document.getElementById('customer-name').value;
+                const rfc = document.getElementById('customer-rfc').value;
+                const phone = document.getElementById('customer-phone').value;
+                
+                if (!name || !rfc || !phone) {
+                    alert('Por favor completa los campos obligatorios: Nombre, RFC y Teléfono');
+                    return;
+                }
+                
+                alert(`Cliente ${name} guardado exitosamente`);
+                customerAddModal.style.display = 'none';
+                clienteBtn.textContent = name;
+            });
+
+            // Cerrar los modales al hacer click fuera de ellos
+            window.addEventListener('click', function(event) {
+                if (event.target === customerModal) {
+                    customerModal.style.display = 'none';
+                }
+                if (event.target === noteModal) {
+                    noteModal.style.display = 'none';
+                }
+                if (event.target === customerAddModal) {
+                    customerAddModal.style.display = 'none';
+                }
             });
         });
     </script>

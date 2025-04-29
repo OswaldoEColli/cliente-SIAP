@@ -6,299 +6,15 @@
     <title>SIAP - Ajustes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Work Sans', sans-serif;
-        }
-
-        body {
-            display: flex;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: 180px;
-            background-color: #30343F;
-            color: white;
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 10;
-        }
-
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 16px;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-left: 3px solid #0084ff;
-            font-weight: 500;
-        }
-
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .menu-item i {
-            margin-right: 12px;
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            margin-left: 16px;
-            margin-right: 16px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .logout-btn i {
-            margin-right: 8px;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            margin-left: 180px;
-            height: 100vh;
-        }
-
-        .content-area {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .settings-header h1 {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .settings-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .settings-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .settings-card h2 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
-            display: flex;
-            align-items: center;
-        }
-
-        .settings-card h2 i {
-            margin-right: 10px;
-            color: #2e3b7c;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .form-group select {
-            background-color: white;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: #2e3b7c;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(30px);
-        }
-
-        .toggle-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .toggle-label {
-            font-weight: 500;
-            color: #555;
-        }
-
-        .save-btn {
-            background-color: #2e3b7c;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 15px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: block;
-            width: 100%;
-        }
-
-        .save-btn:hover {
-            background-color: #232e61;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -200px;
-                top: 0;
-                height: 100%;
-                z-index: 100;
-                transition: left 0.3s ease;
-            }
-
-            .sidebar.active {
-                left: 0;
-            }
-
-            .sidebar-toggle {
-                display: block;
-                position: fixed;
-                top: 10px;
-                left: 10px;
-                z-index: 101;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .settings-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/settingsStyle.css">
 </head>
 <body>
-    <button class="sidebar-toggle" id="sidebar-toggle">
-        <i class="fas fa-bars"></i>
-    </button>
+    
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="logo">SIAP •</div>
-            <button class="theme-toggle">
-                <i class="fas fa-sun"></i>
-            </button>
+            
+            
         </div>
 
         <a href="home.html" class="menu-item">
@@ -316,19 +32,19 @@
             <span>Clientes</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="reports.html" class="menu-item">
             <i class="fas fa-chart-bar"></i>
             <span>Reportes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-            <i class="fas fa-book"></i>
-            <span>Catálogo</span>
         </a>
 
         <a href="inventory.html" class="menu-item">
             <i class="fas fa-boxes"></i>
             <span>Inventario</span>
+        </a>
+
+        <a href="branches.html" class="menu-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Sucursales</span>
         </a>
 
         <a href="settings.html" class="menu-item active">
@@ -341,6 +57,13 @@
             <span>Salir</span>
         </button>
     </div>
+
+    <!-- NUEVO: Logo flotante que se mueve con el sidebar -->
+    <div class="floating-logo" id="floating-logo">
+        <div class="logo">SIAP </div>
+        <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+    </div>
+
 
     <div class="main-content">
         <div class="content-area">
@@ -559,6 +282,24 @@
     </div>
 
     <script>
+
+         // NUEVO: Elementos principales
+         const floatingLogo = document.getElementById('floating-logo');
+        const sidebar = document.getElementById('sidebar');
+        
+        // NUEVO: Toggle sidebar con el logo flotante
+        if (floatingLogo) {
+            floatingLogo.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // NUEVO: Inicializar para dispositivos móviles
+        if (window.innerWidth <= 768) {
+            // En móviles, sidebar comienza oculto (ya configurado en CSS)
+            // No es necesario añadir la clase 'active' aquí
+        }
+        
         document.getElementById('sidebar-toggle').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
         });

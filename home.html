@@ -5,254 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIAP - Sistema de Inventario de Asociación Pepsi</title>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Work Sans', sans-serif;
-    }
-
-    body {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      background-color:#30343F;
-    }
-
-    /* Sidebar Styles */
-    .sidebar {
-      width: 180px;
-      background-color: #30343F;
-      color: white;
-      padding: 20px 0;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 10;
-    }
-
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 16px;
-    }
-
-    .logo {
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .theme-toggle {
-      background: transparent;
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      padding: 12px 16px;
-      color: #e0e0e0;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-
-    .menu-item.active {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-      border-left: 3px solid #0084ff;
-      font-weight: 500;
-    }
-
-    .menu-item:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .menu-item i {
-      margin-right: 12px;
-      font-size: 18px;
-      width: 20px;
-      text-align: center;
-    }
-
-    .logout-btn {
-      margin-top: auto;
-      margin-left: 16px;
-      margin-right: 16px;
-      padding: 10px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-
-    .logout-btn i {
-      margin-right: 8px;
-    }
-
-    /* Main Content Styles */
-    .main-content {
-      margin-left: 200px;
-      width: 1680px;
-      height: 800px;
-      background-color: #1E2749;
-      padding: 32px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      border-radius: 24px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    }
-
-    .header {
-      margin-bottom: 30px;
-    }
-
-    .title {
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    .subtitle {
-      color: #b8b8b8;
-      font-size: 13px;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      height: 160px;
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 4px;
-    }
-
-    .card-subtitle {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .card-image {
-      align-self: flex-end;
-      height: 80px;
-    }
-
-    .card-icon {
-      font-size: 48px;
-      color: white;
-      align-self: flex-end;
-    }
-
-    .add-product {
-      background-color: #9f84ff;
-      background-image: linear-gradient(45deg, #9f84ff, #7a5fff);
-    }
-
-    .modify-inventory {
-      background-color: #6b9fff;
-      background-image: linear-gradient(45deg, #6b9fff, #4e7fff);
-    }
-
-    .view-inventory {
-      background-color: #ff9f7a;
-      background-image: linear-gradient(45deg, #ff9f7a, #ff7a5f);
-    }
-
-    .welcome {
-      background-color: #3c3f5c;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .toggle-sidebar {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        position: fixed;
-        left: -180px;
-        top: 0;
-        height: 100%;
-        z-index: 100;
-        transition: left 0.3s ease;
-      }
-
-      .sidebar.active {
-        left: 0;
-      }
-
-      .toggle-sidebar {
-        display: block;
-      }
-
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-
-      .main-content {
-        margin-left: 0;
-        width: 100%;
-        border-radius: 0;
-      }
-    }
-
-    .logo-img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-    }
-
-  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles/homeStyle.css">
 </head>
 <body>
   <!-- Sidebar Navigation -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="logo">SIAP •</div>
-      <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+      <button class="theme-toggle">
+        
+      </button>
     </div>
 
     <a href="home.html" class="menu-item active">
@@ -270,19 +32,19 @@
       <span>Clientes</span>
     </a>
 
-    <a href="#" class="menu-item">
+    <a href="reports.html" class="menu-item">
       <i class="fas fa-chart-bar"></i>
       <span>Reportes</span>
-    </a>
-
-    <a href="#" class="menu-item">
-      <i class="fas fa-book"></i>
-      <span>Catálogo</span>
     </a>
 
     <a href="inventory.html" class="menu-item">
       <i class="fas fa-boxes"></i>
       <span>Inventario</span>
+    </a>
+
+    <a href="branches.html" class="menu-item">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Sucursales</span>
     </a>
 
     <a href="settings.html" class="menu-item">
@@ -291,9 +53,15 @@
     </a>
 
     <button class="logout-btn">
-      <i class="fas fa-sign-out-alt" ></i>
+      <i class="fas fa-sign-out-alt"></i>
       <span>Salir</span>
     </button>
+  </div>
+
+  <!-- Logo flotante que se mueve con el sidebar pero siempre deja una parte visible -->
+  <div class="floating-logo" id="floating-logo">
+    <div class="logo">SIAP </div>
+    <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
   </div>
 
   <!-- Main Content Area -->
@@ -339,32 +107,73 @@
   </div>
 
   <script>
-    document.getElementById('toggle-sidebar')?.addEventListener('click', function () {
-      document.getElementById('sidebar').classList.toggle('active');
-    });
-
+    // Elementos principales
+    const floatingLogo = document.getElementById('floating-logo');
+    const sidebar = document.getElementById('sidebar');
     const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-
-    themeToggle.addEventListener('click', function () {
-      body.classList.toggle('light-mode');
-      themeToggle.innerHTML = body.classList.contains('light-mode')
-        ? '<i class="fas fa-moon"></i>'
-        : '<i class="fas fa-sun"></i>';
-    });
-
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', function () {
-        console.log('Card clicked:', this.querySelector('.card-title').textContent);
+    
+    // Toggle sidebar con el logo flotante
+    if (floatingLogo) {
+      floatingLogo.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
       });
-    });
-
-    document.querySelector('.logout-btn').addEventListener('click', function () {
-            if (confirm('¿Seguro que deseas cerrar sesión?')) {
-                alert('Sesión cerrada');
-                window.location.href = 'login.html';
-            }
+    }
+  
+    // Cambio de tema
+    if (themeToggle) {
+      const body = document.body;
+      themeToggle.addEventListener('click', function(e) {
+        // Evita que el clic en el botón de tema active el sidebar
+        e.stopPropagation();
+        
+        body.classList.toggle('light-mode');
+        themeToggle.innerHTML = body.classList.contains('light-mode')
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      });
+    }
+  
+    // Interacción con las tarjetas
+    const cards = document.querySelectorAll('.card');
+    if (cards.length > 0) {
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          console.log('Card clicked:', this.querySelector('.card-title').textContent);
         });
+      });
+    }
+  
+    // Marcar menú activo
+    const menuItems = document.querySelectorAll('.menu-item');
+    if (menuItems.length > 0) {
+      menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+  
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove('active');
+          }
+        });
+      });
+    }
+  
+    // Botón de cerrar sesión
+    const logoutBtn = document.querySelector('.logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function() {
+        if (confirm('¿Seguro que deseas cerrar sesión?')) {
+          alert('Sesión cerrada');
+          window.location.href = 'login.html';
+        }
+      });
+    }
+    
+    // Inicializar para dispositivos móviles
+    if (window.innerWidth <= 768) {
+      // En móviles, sidebar comienza oculto
+      sidebar.classList.add('active');
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAP - Mapa de Sucursales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Work+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/branchesStyle.css">
+</head>
+<body>
+    
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            
+        </div>
+
+        <a href="home.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+
+        <a href="sales.html" class="menu-item">
+            <i class="fas fa-dollar-sign"></i>
+            <span>Ventas</span>
+        </a>
+
+        <a href="customer.html" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Clientes</span>
+        </a>
+
+        <a href="reports.html" class="menu-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+        </a>
+
+        <a href="inventory.html" class="menu-item">
+            <i class="fas fa-boxes"></i>
+            <span>Inventario</span>
+        </a>
+
+        <a href="branches.html" class="menu-item active">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Sucursales</span>
+        </a>
+
+        <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Ajustes</span>
+        </a>
+
+        <button class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>
+    </div>
+
+    <!-- NUEVO: Logo flotante que se mueve con el sidebar -->
+    <div class="floating-logo" id="floating-logo">
+        <div class="logo">SIAP </div>
+        <img src="photos/logo 3.png" alt="Logo SIAP" class="logo-img">
+    </div>
+
+
+    <div class="main-content">
+        <div class="content-area">
+            <div class="branches-header">
+                <h1>Mapa de Sucursales</h1>
+                <button class="add-branch-btn" id="add-branch-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Nueva Sucursal</span>
+                </button>
+            </div>
+
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar sucursal por nombre, ciudad o estado...">
+            </div>
+
+            <div class="map-container">
+                <div class="branch-list">
+                    <div class="branch-item active" data-id="1">
+                        <div class="branch-name">Sucursal Polanco</div>
+                        <div class="branch-address">Av. Presidente Masaryk 111, Polanco, CDMX</div>
+                        <div class="branch-contact">
+                            <span><i class="fas fa-phone"></i> 55 1234 5678</span>
+                            <span><i class="fas fa-user"></i> Juan Pérez</span>
+                        </div>
+                    </div>
+                    <div class="branch-item" data-id="2">
+                        <div class="branch-name">Sucursal Monterrey Centro</div>
+                        <div class="branch-address">Av. Constitución 350, Centro, Monterrey</div>
+                        <div class="branch-contact">
+                            <span><i class="fas fa-phone"></i> 81 8765 4321</span>
+                            <span><i class="fas fa-user"></i> María López</span>
+                        </div>
+                    </div>
+                    <div class="branch-item" data-id="3">
+                        <div class="branch-name">Sucursal Guadalajara</div>
+                        <div class="branch-address">Av. López Mateos 555, Zapopan, Jalisco</div>
+                        <div class="branch-contact">
+                            <span><i class="fas fa-phone"></i> 33 3698 7452</span>
+                            <span><i class="fas fa-user"></i> Roberto Gómez</span>
+                        </div>
+                    </div>
+                    <div class="branch-item" data-id="4">
+                        <div class="branch-name">Sucursal Cancún</div>
+                        <div class="branch-address">Blvd. Kukulcán km 9.5, Zona Hotelera, Cancún</div>
+                        <div class="branch-contact">
+                            <span><i class="fas fa-phone"></i> 998 123 4567</span>
+                            <span><i class="fas fa-user"></i> Lucía Ramírez</span>
+                        </div>
+                    </div>
+                    <div class="branch-item" data-id="5">
+                        <div class="branch-name">Sucursal Puebla</div>
+                        <div class="branch-address">Calle 2 Sur 1902, Centro, Puebla</div>
+                        <div class="branch-contact">
+                            <span><i class="fas fa-phone"></i> 222 987 6543</span>
+                            <span><i class="fas fa-user"></i> Carlos Ortiz</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-view">
+                    <div id="map" class="map-placeholder">
+                        <img src="/api/placeholder/800/600" alt="Mapa de sucursales">
+                    </div>
+                    <div class="map-controls">
+                        <button class="map-control-btn" title="Acercar">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="map-control-btn" title="Alejar">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button class="map-control-btn" title="Mi ubicación">
+                            <i class="fas fa-location-arrow"></i>
+                        </button>
+                    </div>
+                    <div class="branch-info-panel" id="branch-info">
+                        <h3>Sucursal Polanco</h3>
+                        <div class="info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Presidente Masaryk 111, Polanco, CDMX</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-phone"></i>
+                            <span>55 1234 5678</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-envelope"></i>
+                            <span>polanco@siap.com.mx</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-user"></i>
+                            <span>Gerente: Juan Pérez</span>
+                        </div>
+                        <div class="info-row">
+                            <i class="fas fa-clock"></i>
+                            <span>Horario: Lun-Vie 9:00-18:00, Sáb 9:00-14:00</span>
+                        </div>
+                        <div class="branch-actions">
+                            <button class="branch-action-btn btn-primary">
+                                <i class="fas fa-directions"></i> Cómo llegar
+                            </button>
+                            <button class="branch-action-btn btn-secondary">
+                                <i class="fas fa-info-circle"></i> Detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar sucursal -->
+    <div class="branch-modal" id="branch-modal">
+        <div class="modal-content">
+            <h2>Nueva Sucursal</h2>
+            
+            <div class="form-group">
+                <label for="branch-name">Nombre de la sucursal</label>
+                <input type="text" id="branch-name" placeholder="Nombre de la sucursal">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branch-city">Ciudad</label>
+                    <input type="text" id="branch-city" placeholder="Ciudad">
+                </div>
+                <div class="form-group">
+                    <label for="branch-state">Estado</label>
+                    <input type="text" id="branch-state" placeholder="Estado">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="branch-address">Dirección completa</label>
+                <input type="text" id="branch-address" placeholder="Dirección completa">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branch-phone">Teléfono</label>
+                    <input type="text" id="branch-phone" placeholder="Teléfono">
+                </div>
+                <div class="form-group">
+                    <label for="branch-email">Correo electrónico</label>
+                    <input type="email" id="branch-email" placeholder="Correo electrónico">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="branch-manager">Gerente</label>
+                    <input type="text" id="branch-manager" placeholder="Nombre del gerente">
+                </div>
+                <div class="form-group">
+                    <label for="branch-status">Estado</label>
+                    <select id="branch-status">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button id="cancel-modal">Cancelar</button>
+                <button id="save-branch">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NUEVO: Elementos principales
+        const floatingLogo = document.getElementById('floating-logo');
+            const sidebar = document.getElementById('sidebar');
+            
+            // NUEVO: Toggle sidebar con el logo flotante
+            if (floatingLogo) {
+                floatingLogo.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        
+
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('light-mode');
+                themeToggle.innerHTML = body.classList.contains('light-mode') ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            });
+        }
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function () {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+
+        document.querySelector('.logout-btn').addEventListener('click', function () {
+            if (confirm('¿Seguro que deseas cerrar sesión?')) {
+                alert('Sesión cerrada');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Mostrar panel de información al hacer clic en el mapa
+        document.getElementById('map').addEventListener('click', function() {
+            document.getElementById('branch-info').style.display = 'block';
+        });
+
+        // Funcionalidad para los elementos de la lista de sucursales
+        const branchItems = document.querySelectorAll('.branch-item');
+        branchItems.forEach(item => {
+            item.addEventListener('click', function() {
+                branchItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('branch-info').style.display = 'block';
+                
+                // En un escenario real, aquí se actualizaría el mapa y el panel de información
+                // con los datos de la sucursal seleccionada
+                const branchName = this.querySelector('.branch-name').textContent;
+                const branchAddress = this.querySelector('.branch-address').textContent;
+                
+                document.querySelector('#branch-info h3').textContent = branchName;
+                document.querySelector('#branch-info .info-row span').textContent = branchAddress;
+            });
+        });
+
+        // Funcionalidad para mostrar/ocultar el modal de sucursal
+        const addBranchBtn = document.getElementById('add-branch-btn');
+        const branchModal = document.getElementById('branch-modal');
+        const cancelModalBtn = document.getElementById('cancel-modal');
+        const saveBranchBtn = document.getElementById('save-branch');
+
+        addBranchBtn.addEventListener('click', function() {
+            branchModal.style.display = 'flex';
+        });
+
+        cancelModalBtn.addEventListener('click', function() {
+            branchModal.style.display = 'none';
+        });
+
+        saveBranchBtn.addEventListener('click', function() {
+            // Aquí puedes agregar la lógica para guardar la nueva sucursal
+            const name = document.getElementById('branch-name').value;
+            const city = document.getElementById('branch-city').value;
+            const address = document.getElementById('branch-address').value;
+            
+            if (!name || !city || !address) {
+                alert('Por favor completa los campos obligatorios: Nombre, Ciudad y Dirección');
+                return;
+            }
+            
+            alert(`Sucursal ${name} guardada exitosamente`);
+            branchModal.style.display = 'none';
+        });
+
+        // Cerrar el modal si se hace clic fuera de él
+        window.addEventListener('click', function(event) {
+            if (event.target === branchModal) {
+                branchModal.style.display = 'none';
+            }
+        });
+
+        // Funcionalidad para botones de control del mapa
+        const mapControlBtns = document.querySelectorAll('.map-control-btn');
+        mapControlBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // En un escenario real, aquí iría la lógica para controlar el mapa
+                alert('Función de mapa: ' + this.title);
+            });
+        });
+
+        // Funcionalidad para botones de acción en el panel de información
+        const branchActionBtns = document.querySelectorAll('.branch-action-btn');
+        branchActionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.textContent.trim();
+                alert('Acción seleccionada: ' + action);
+            });
+        });
+    </script>
+</body>
+</html>
